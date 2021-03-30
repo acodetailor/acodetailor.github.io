@@ -3,11 +3,11 @@
   <title>Sam</title>
   
   <subtitle>用我的双手，成就你的梦想。一库~</subtitle>
-  <link href="http://example.com/atom.xml" rel="self"/>
+  <link href="https://acodetailor.github.io/atom.xml" rel="self"/>
   
-  <link href="http://example.com/"/>
+  <link href="https://acodetailor.github.io/"/>
   <updated>2021-03-30T02:38:39.714Z</updated>
-  <id>http://example.com/</id>
+  <id>https://acodetailor.github.io/</id>
   
   <author>
     <name>Sam</name>
@@ -18,8 +18,8 @@
   
   <entry>
     <title>Hello World</title>
-    <link href="http://example.com/2021/03/30/hello-world/"/>
-    <id>http://example.com/2021/03/30/hello-world/</id>
+    <link href="https://acodetailor.github.io/2021/03/30/hello-world/"/>
+    <id>https://acodetailor.github.io/2021/03/30/hello-world/</id>
     <published>2021-03-30T02:38:39.714Z</published>
     <updated>2021-03-30T02:38:39.714Z</updated>
     
