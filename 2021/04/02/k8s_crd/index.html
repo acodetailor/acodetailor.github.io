@@ -17,18 +17,21 @@
   <meta http-equiv="window-target" content="_top" />
   
   
-  <title>404 Not Found：该页无法显示 | Lakers</title>
-  <meta property="og:type" content="website">
-<meta property="og:title" content="404 Not Found：该页无法显示">
-<meta property="og:url" content="https://acodetailor.github.io/404.html">
+  <title>Kubernetes CRD -- kubebuilder搭建 | Lakers</title>
+  <meta name="description" content="概念官方解释：CustomResourceDefinition API 资源允许你定义定制资源。 定义 CRD 对象的操作会使用你所设定的名字和模式定义（Schema）创建一个新的定制资源， Kubernetes API 负责为你的定制资源提供存储和访问服务。 CRD 对象的名称必须是合法的 DNS 子域名。 DNS子域名规则如下：  不能超过253个字符 只能包含小写字母、数字，以及’-‘ 和">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Kubernetes CRD -- kubebuilder搭建">
+<meta property="og:url" content="https://acodetailor.github.io/2021/04/02/k8s_crd/index.html">
 <meta property="og:site_name" content="Sam">
+<meta property="og:description" content="概念官方解释：CustomResourceDefinition API 资源允许你定义定制资源。 定义 CRD 对象的操作会使用你所设定的名字和模式定义（Schema）创建一个新的定制资源， Kubernetes API 负责为你的定制资源提供存储和访问服务。 CRD 对象的名称必须是合法的 DNS 子域名。 DNS子域名规则如下：  不能超过253个字符 只能包含小写字母、数字，以及’-‘ 和">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2021-03-30T07:24:39.640Z">
-<meta property="article:modified_time" content="2021-03-30T07:24:39.640Z">
+<meta property="article:published_time" content="2021-04-02T02:17:18.350Z">
+<meta property="article:modified_time" content="2021-04-02T03:53:26.061Z">
 <meta property="article:author" content="Sam">
+<meta property="article:tag" content="k8s">
 <meta name="twitter:card" content="summary">
   <!-- Canonical links -->
-  <link rel="canonical" href="https://acodetailor.github.io/404.html">
+  <link rel="canonical" href="https://acodetailor.github.io/2021/04/02/k8s_crd/index.html">
   
     <link rel="alternate" href="/atom.xml" title="Sam" type="application/atom+xml">
   
@@ -294,14 +297,14 @@
   
 <main class="main" role="main">
   <div class="content">
-  <article id="page-" class="article article-type-page" itemscope itemtype="http://schema.org/BlogPosting">
+  <article id="post-k8s_crd" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
     
     <div class="article-header">
       
         
   
     <h1 class="article-title" itemprop="name">
-      404 Not Found：该页无法显示
+      Kubernetes CRD -- kubebuilder搭建
     </h1>
   
 
@@ -309,23 +312,59 @@
       <div class="article-meta">
         <span class="article-date">
     <i class="icon icon-calendar-check"></i>
-	<a href="/404.html" class="article-date">
-	  <time datetime="2021-03-30T07:24:39.640Z" itemprop="datePublished">2021-03-30</time>
+	<a href="/2021/04/02/k8s_crd/" class="article-date">
+	  <time datetime="2021-04-02T02:17:18.350Z" itemprop="datePublished">2021-04-02</time>
 	</a>
 </span>
         
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/categories/k8s/">k8s</a>
+  </span>
+
         
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link-link" href="/tags/k8s/" rel="tag">k8s</a>
+  </span>
+
 
         
 
-        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/404.html#comments" class="article-comment-link">评论</a></span>
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2021/04/02/k8s_crd/#comments" class="article-comment-link">评论</a></span>
         
       </div>
     </div>
     <div class="article-entry marked-body" itemprop="articleBody">
       
-        <script type="text/javascript" src="//www.qq.com/404/search_children.js" charset="utf-8" homePageUrl="<%- config.url %>" homePageName="回到我的主页"></script>
-
+        <h1 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h1><p>官方解释：CustomResourceDefinition API 资源允许你定义定制资源。 定义 CRD 对象的操作会使用你所设定的名字和模式定义（Schema）<br>创建一个新的定制资源， Kubernetes API 负责为你的定制资源提供存储和访问服务。 CRD 对象的名称必须是合法的 DNS 子域名。</p>
+<p>DNS子域名规则如下：</p>
+<ul>
+<li>不能超过253个字符</li>
+<li>只能包含小写字母、数字，以及’-‘ 和 ‘.’</li>
+<li>须以字母数字开头</li>
+<li>须以字母数字结尾</li>
+</ul>
+<p>简单来说，你可以定义像k8s原生资源如deployment、service一样定义自己的资源，而k8s会为你提供存储（ETCD）,访问（kube-apiserver）。</p>
+<h1 id="脚手架"><a href="#脚手架" class="headerlink" title="脚手架"></a>脚手架</h1><p>kubebuilder 和 operator sdk, 个人只使用过kubebuilder。</p>
+<h1 id="安装kubebuilder"><a href="#安装kubebuilder" class="headerlink" title="安装kubebuilder"></a>安装kubebuilder</h1><h3 id="依赖"><a href="#依赖" class="headerlink" title="依赖"></a>依赖</h3><p>1、docker<br>2、go 建议版本在1.12以上，支持 go mod<br>3、kustomize</p>
+<h3 id="代理配置"><a href="#代理配置" class="headerlink" title="代理配置"></a>代理配置</h3><p>配置一下 终端代理，因为初始化时会拉去go的依赖包。<br>go 1.12之下开启 go module</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> GOPROXY=https://goproxy.io</span><br><span class="line"><span class="built_in">export</span> GO111MODULE=on</span><br></pre></td></tr></table></figure>
+<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p><strong>一、安装kubebuilder</strong><br>执行如下命令。（如果curl下载失败，大概率是网络原因，可以手动下载，解压到指定目录）。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">os= $(go env GOOS)</span><br><span class="line">arch=$(go env GOARCH)</span><br><span class="line">curl -L https://go.kubebuilder.io/dl/2.3.1/<span class="variable">$&#123;os&#125;</span>/<span class="variable">$&#123;arch&#125;</span> | tar -xz -C /tmp/</span><br><span class="line">sudo mv /tmp/kubebuilder_2.3.1_<span class="variable">$&#123;os&#125;</span>_<span class="variable">$&#123;arch&#125;</span> /usr/<span class="built_in">local</span>/kubebuilder</span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$PATH</span>:/usr/<span class="built_in">local</span>/kubebuilder/bin</span><br></pre></td></tr></table></figure>
+<p><strong>二、安装kustomize</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew install kustomize </span><br></pre></td></tr></table></figure>
+<p><strong>三、安装完成后查看版本信息</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ kubebuilder version</span><br><span class="line">Version: version.Version&#123;KubeBuilderVersion:<span class="string">&quot;2.3.1&quot;</span>, KubernetesVendor:<span class="string">&quot;1.16.4&quot;</span>, GitCommit:<span class="string">&quot;8b53abeb4280186e494b726edf8f54ca7aa64a49&quot;</span>, BuildDate:<span class="string">&quot;2020-03-26T16:42:00Z&quot;</span>, GoOs:<span class="string">&quot;unknown&quot;</span>, GoArch:<span class="string">&quot;unknown&quot;</span>&#125;</span><br><span class="line"><span class="comment"># sam @ MacBook-Pro-2 in ~/tf/alitest [10:45:37]</span></span><br><span class="line">$ kustomize version</span><br><span class="line">&#123;Version:kustomize/v3.8.2 GitCommit:e2973f6ecc9be6187cfd5ecf5e180f842249b3c6 BuildDate:2020-09-02T07:01:55+01:00 GoOs:darwin GoArch:amd64&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>四、初始化工程</strong>  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">kubebuilder init --domain my.crd.com  //初始化工程</span><br><span class="line">kubebuilder create api --group custom --version v1 --kind Unit //生成脚手架代码</span><br></pre></td></tr></table></figure>
+<p> <strong>group</strong>: 比如资源文件的apps/v1, apps即为分组，还有其他extensions、cores等。  </p>
+<p> <strong>version</strong>: 顾名思义、v1即为版本。  </p>
+<p> <strong>kind</strong>: API “顶级”资源对象的类型，每个资源对象都需要 Kind 来区分它自身代表的资源类型。比如 pod,deployment.  </p>
+<p> <strong>resource</strong>: 通过 HTTP 协议以 JSON 格式发送或者读取的资源展现形式，可以以单个资源对象展现。  </p>
+<p> <strong>GVK(group、version、kind)</strong>:<br>同 Kind 不止可以出现在同一分组的不同版本中，如 apps/v1beta1 与 apps/v1，它还可能出现在不同的分组中，例如 Deployment 开始以 alpha 的特性出现在 extensions 分组，GA 之后被推进到 apps 组，所以为了严格区分不同的 Kind，需要组合 API Group、API Version 与 Kind 成为 GVK。  </p>
+<p> <strong>GVR(group、version、resource)</strong>:<br>GVR 常用于组合成 RESTful API 请求路径。例如，针对应用程序 v1 部署的 RESTful API 请求如下所示：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GET /apis/apps/v1/namespaces/&#123;namespace&#125;/deployments/&#123;name&#125;</span><br></pre></td></tr></table></figure>
       
     </div>
     <div class="article-footer">
@@ -334,7 +373,7 @@
     
     <li class="post-copyright-link hidden-xs">
       <strong>本文链接：</strong>
-      <a href="https://acodetailor.github.io/404.html" title="404 Not Found：该页无法显示" target="_blank" rel="external">https://acodetailor.github.io/404.html</a>
+      <a href="https://acodetailor.github.io/2021/04/02/k8s_crd/" title="Kubernetes CRD -- kubebuilder搭建" target="_blank" rel="external">https://acodetailor.github.io/2021/04/02/k8s_crd/</a>
     </li>
     
     <li class="post-copyright-license">
@@ -365,12 +404,28 @@
   </article>
   
     
+  <section id="comments">
+  	
+      <div id="vcomments"></div>
+    
+  </section>
+
 
   
 </div>
 
   <nav class="bar bar-footer clearfix" data-stick-bottom>
   <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    
+    <li class="next">
+      <a href="/2021/03/30/terraform/" title="Terraform介绍"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+  </ul>
   
   
   <!-- Button trigger modal -->
@@ -486,6 +541,37 @@ window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
 
 
 
+
+   
+
+
+
+
+   
+    
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/valine"></script>
+  <script type="text/javascript">
+  var GUEST = ['nick', 'mail', 'link'];
+  var meta = 'nick,mail,link';
+  meta = meta.split(',').filter(function(item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#vcomments',
+    verify: false,
+    notify: false,
+    appId: '',
+    appKey: '',
+    placeholder: 'Just go go',
+    avatar: 'mm',
+    meta: meta,
+    pageSize: '10' || 10,
+    visitor: false
+  });
+  </script>
+
+     
 
 
 
