@@ -6,7 +6,7 @@
   <link href="https://acodetailor.github.io/atom.xml" rel="self"/>
   
   <link href="https://acodetailor.github.io/"/>
-  <updated>2021-04-02T03:53:26.061Z</updated>
+  <updated>2021-04-07T05:41:50.275Z</updated>
   <id>https://acodetailor.github.io/</id>
   
   <author>
@@ -15,6 +15,31 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>terraform cloud CLI</title>
+    <link href="https://acodetailor.github.io/2021/04/07/terraform_cloud/"/>
+    <id>https://acodetailor.github.io/2021/04/07/terraform_cloud/</id>
+    <published>2021-04-07T02:02:39.990Z</published>
+    <updated>2021-04-07T05:41:50.275Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="一、简介"><a href="#一、简介" class="headerlink" title="一、简介"></a>一、简介</h1><ul><li>terraform自身提供可一个机制（类似CI/CD的流水线），可以配置自己的git库，根据git库文件内容的变化，执行<br>plan、apply，也可以手动执行。以及配置变量文件、环境变量、state文件统一存储等等功能。</li></ul><h1 id="二、对比"><a href="#二、对比" class="headerlink" title="二、对比"></a>二、对比</h1><p>1、使用terraform二进制。</p><ul><li>需要下载provider(terraform init)</li><li>编写tf文件，backend存储。也需要统一的配置管理。</li><li>每次手动触发。  </li></ul><p>2、使用Cloud CLI。</p><ul><li>不需要准备provider</li><li>统一的配置管理</li><li>git push后即触发 terraform</li></ul><h1 id="三、栗子"><a href="#三、栗子" class="headerlink" title="三、栗子"></a>三、栗子</h1><h4 id="1、创建组织"><a href="#1、创建组织" class="headerlink" title="1、创建组织"></a>1、创建组织</h4><ul><li>terraform网站创建即可。 <a href="https://app.terraform.io/">https://app.terraform.io</a><h4 id="2、配置git库"><a href="#2、配置git库" class="headerlink" title="2、配置git库"></a>2、配置git库</h4></li><li>可以使用个人的git库，配置Oauth权限。根据提示 在github-&gt;setting-&gt;developer settings-&gt; oauth apps申请配置即可。  </li></ul><h4 id="3、选择工程"><a href="#3、选择工程" class="headerlink" title="3、选择工程"></a>3、选择工程</h4><ul><li>git新建一个工程，然后再terraform处选择该工程。  </li></ul><p><img src="../../../../image/terraform/terraformcloud.jpg" alt="chooserepo"></p><h4 id="4、测试"><a href="#4、测试" class="headerlink" title="4、测试"></a>4、测试</h4><ul><li>执行Run即可，每次修改都会触发 plan,然后需要手动执行apply。  </li></ul><h4 id="5、结果"><a href="#5、结果" class="headerlink" title="5、结果"></a>5、结果</h4><p><img src="../../../../image/terraform/terraformapply.jpg" alt="apply"></p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;一、简介&quot;&gt;&lt;a href=&quot;#一、简介&quot; class=&quot;headerlink&quot; title=&quot;一、简介&quot;&gt;&lt;/a&gt;一、简介&lt;/h1&gt;&lt;ul&gt;
+&lt;li&gt;terraform自身提供可一个机制（类似CI/CD的流水线），可以配置自己的git库，根据git库文件内容的变</summary>
+      
+    
+    
+    
+    <category term="terraform" scheme="https://acodetailor.github.io/categories/terraform/"/>
+    
+    
+    <category term="terraform" scheme="https://acodetailor.github.io/tags/terraform/"/>
+    
+  </entry>
   
   <entry>
     <title>Kubernetes CRD -- kubebuilder搭建</title>
