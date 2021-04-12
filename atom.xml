@@ -6,7 +6,7 @@
   <link href="https://acodetailor.github.io/atom.xml" rel="self"/>
   
   <link href="https://acodetailor.github.io/"/>
-  <updated>2021-04-07T05:41:50.275Z</updated>
+  <updated>2021-04-12T13:34:52.892Z</updated>
   <id>https://acodetailor.github.io/</id>
   
   <author>
@@ -15,6 +15,59 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>记一次OOM的问题排查</title>
+    <link href="https://acodetailor.github.io/2021/04/12/ops-oom/"/>
+    <id>https://acodetailor.github.io/2021/04/12/ops-oom/</id>
+    <published>2021-04-12T13:03:40.025Z</published>
+    <updated>2021-04-12T13:34:52.892Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="一、问题现象"><a href="#一、问题现象" class="headerlink" title="一、问题现象"></a>一、问题现象</h1><ul><li>三天前，业务的pod重启了，业务想知道具体原因。</li></ul><p><img src="../../../../image/problem/0412/%E4%B8%9A%E5%8A%A1%E6%97%A5%E5%BF%97.png" alt="reason"></p><h1 id="二、排查记录"><a href="#二、排查记录" class="headerlink" title="二、排查记录"></a>二、排查记录</h1><ul><li>首先排查kubelet日志，蛋疼的是期间业务手动重启了几次，导致不知道pod重启时所在的节点。<br>一个个节点排查kubelet的日志（不知道后续有没有好的方法），找到节点发现日志如下：</li></ul><p><img src="../../../../image/problem/0412/kubelet%E6%97%A5%E5%BF%97.png" alt="reason"></p><p>  kubelet执行PLEG时发现容器挂掉了，直接给拉起了，就是业务前台发现的重启事件。</p><ul><li>再排查业务日志，发现只有Killed,八成是OOM了。日志截图如下：</li></ul><p><img src="../../../../image/problem/0412/%E6%9C%8D%E5%8A%A1%E6%97%A5%E5%BF%97.png" alt="reason"></p><ul><li>下一步排查内核日志，kerenal。发现确实是OOM了。截图如下:</li></ul><p><img src="../../../../image/problem/0412/cgroup%E6%97%A5%E5%BF%97.png" alt="reason"></p><ul><li>然后问题来了，我们的监控发现并没有达到内存的上限，但是cgroup确实达到了上限。真是让人头大啊。</li></ul><h1 id="三、几个命令"><a href="#三、几个命令" class="headerlink" title="三、几个命令"></a>三、几个命令</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">zgrep <span class="string">&quot;&quot;</span> *.gz</span><br><span class="line">journalctl --since <span class="string">&#x27;2021-04-09 22:00&#x27;</span></span><br></pre></td></tr></table></figure><h1 id="四、引申问题"><a href="#四、引申问题" class="headerlink" title="四、引申问题"></a>四、引申问题</h1><ul><li>1、cgroup的机制</li><li>2、java的内存机制</li></ul>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;一、问题现象&quot;&gt;&lt;a href=&quot;#一、问题现象&quot; class=&quot;headerlink&quot; title=&quot;一、问题现象&quot;&gt;&lt;/a&gt;一、问题现象&lt;/h1&gt;&lt;ul&gt;
+&lt;li&gt;三天前，业务的pod重启了，业务想知道具体原因。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src=</summary>
+      
+    
+    
+    
+    <category term="运维" scheme="https://acodetailor.github.io/categories/%E8%BF%90%E7%BB%B4/"/>
+    
+    
+    <category term="oom" scheme="https://acodetailor.github.io/tags/oom/"/>
+    
+  </entry>
+  
+  <entry>
+    <title></title>
+    <link href="https://acodetailor.github.io/2021/04/09/TCP/"/>
+    <id>https://acodetailor.github.io/2021/04/09/TCP/</id>
+    <published>2021-04-09T06:37:26.865Z</published>
+    <updated>2021-04-09T06:37:26.865Z</updated>
+    
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title></title>
+    <link href="https://acodetailor.github.io/2021/04/09/Iptabels%20And%20Ipvs/"/>
+    <id>https://acodetailor.github.io/2021/04/09/Iptabels%20And%20Ipvs/</id>
+    <published>2021-04-09T06:37:13.851Z</published>
+    <updated>2021-04-09T06:37:13.851Z</updated>
+    
+    
+    
+    
+    
+  </entry>
   
   <entry>
     <title>terraform cloud CLI</title>
