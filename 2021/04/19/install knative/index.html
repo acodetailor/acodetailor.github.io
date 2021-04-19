@@ -27,7 +27,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://acodetailor.github.io/image/install/knative.png">
 <meta property="article:published_time" content="2021-04-19T09:26:51.731Z">
-<meta property="article:modified_time" content="2021-04-19T09:49:08.653Z">
+<meta property="article:modified_time" content="2021-04-19T10:05:30.896Z">
 <meta property="article:author" content="Sam">
 <meta property="article:tag" content="k8s">
 <meta name="twitter:card" content="summary">
@@ -397,6 +397,8 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -L https://istio.io/downloadIstio | ISTIO_VERSION=1.9.1 TARGET_ARCH=x86_64 sh -</span><br></pre></td></tr></table></figure>
 <p>安装命令：根据需要选择合适的profile</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">istioctl manifest apply --<span class="built_in">set</span> profile=demo //使用这条命令安装失败了。</span><br><span class="line">istioctl install --<span class="built_in">set</span> profile=demo -y</span><br></pre></td></tr></table></figure>
+<p>追加部署addons</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> istio-1.9.1</span><br><span class="line">kc  --context=minikube apply -f samples/addons -n istio-system</span><br></pre></td></tr></table></figure>
 <h4 id="搭建knative"><a href="#搭建knative" class="headerlink" title="搭建knative"></a>搭建knative</h4><p>knative搭建比较简单，可以手动安装，再麻烦一点，可以自己下载yaml手动执行，serving和eventing一共四个yaml</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">serving-crds</span><br><span class="line">serving-core</span><br><span class="line">eventing-crds</span><br><span class="line">eventing-core</span><br></pre></td></tr></table></figure>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl apply --filename <span class="string">&quot;https://github.com/knative/serving/releases/download/v0.17.0/serving-crds.yaml&quot;</span></span><br></pre></td></tr></table></figure>
