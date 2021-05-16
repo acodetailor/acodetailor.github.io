@@ -17,21 +17,21 @@
   <meta http-equiv="window-target" content="_top" />
   
   
-  <title>Kubernetes CRD -- kubebuilder搭建 | Lakers</title>
-  <meta name="description" content="概念官方解释：CustomResourceDefinition API 资源允许你定义定制资源。 定义 CRD 对象的操作会使用你所设定的名字和模式定义（Schema）创建一个新的定制资源， Kubernetes API 负责为你的定制资源提供存储和访问服务。 CRD 对象的名称必须是合法的 DNS 子域名。 DNS子域名规则如下：  不能超过253个字符 只能包含小写字母、数字，以及’-‘ 和">
+  <title>Serverless之介绍 | Lakers</title>
+  <meta name="description" content="一、Serverless是什么Serverless计算是指构建和运行不需要服务器管理的应用程序的概念。它描述了一种更细粒度的部署模型，应用程序捆绑一个或多个function，上载到平台，然后执行，缩放和计费，以响应当前所需的确切需求。Serverless计算并不意味着我们不再使用服务器来托管和运行代码；也不意味着不再需要运维工程师。相反，它指的是serverless计算的消费者（开发人员）不再需要">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Kubernetes CRD -- kubebuilder搭建">
-<meta property="og:url" content="https://acodetailor.github.io/2021/04/02/k8s_crd/index.html">
+<meta property="og:title" content="Serverless之介绍">
+<meta property="og:url" content="https://acodetailor.github.io/2021/04/28/serverless/index.html">
 <meta property="og:site_name" content="Sam">
-<meta property="og:description" content="概念官方解释：CustomResourceDefinition API 资源允许你定义定制资源。 定义 CRD 对象的操作会使用你所设定的名字和模式定义（Schema）创建一个新的定制资源， Kubernetes API 负责为你的定制资源提供存储和访问服务。 CRD 对象的名称必须是合法的 DNS 子域名。 DNS子域名规则如下：  不能超过253个字符 只能包含小写字母、数字，以及’-‘ 和">
+<meta property="og:description" content="一、Serverless是什么Serverless计算是指构建和运行不需要服务器管理的应用程序的概念。它描述了一种更细粒度的部署模型，应用程序捆绑一个或多个function，上载到平台，然后执行，缩放和计费，以响应当前所需的确切需求。Serverless计算并不意味着我们不再使用服务器来托管和运行代码；也不意味着不再需要运维工程师。相反，它指的是serverless计算的消费者（开发人员）不再需要">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2021-04-02T02:17:18.350Z">
-<meta property="article:modified_time" content="2021-04-28T06:34:43.250Z">
+<meta property="article:published_time" content="2021-04-28T06:35:10.932Z">
+<meta property="article:modified_time" content="2021-05-16T13:55:54.901Z">
 <meta property="article:author" content="Sam">
 <meta property="article:tag" content="k8s">
 <meta name="twitter:card" content="summary">
   <!-- Canonical links -->
-  <link rel="canonical" href="https://acodetailor.github.io/2021/04/02/k8s_crd/index.html">
+  <link rel="canonical" href="https://acodetailor.github.io/2021/04/28/serverless/index.html">
   
     <link rel="alternate" href="/atom.xml" title="Sam" type="application/atom+xml">
   
@@ -342,14 +342,14 @@
   
 <main class="main" role="main">
   <div class="content">
-  <article id="post-k8s_crd" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+  <article id="post-serverless" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
     
     <div class="article-header">
       
         
   
     <h1 class="article-title" itemprop="name">
-      Kubernetes CRD -- kubebuilder搭建
+      Serverless之介绍
     </h1>
   
 
@@ -357,8 +357,8 @@
       <div class="article-meta">
         <span class="article-date">
     <i class="icon icon-calendar-check"></i>
-	<a href="/2021/04/02/k8s_crd/" class="article-date">
-	  <time datetime="2021-04-02T02:17:18.350Z" itemprop="datePublished">2021-04-02</time>
+	<a href="/2021/04/28/serverless/" class="article-date">
+	  <time datetime="2021-04-28T06:35:10.932Z" itemprop="datePublished">2021-04-28</time>
 	</a>
 </span>
         
@@ -376,40 +376,61 @@
 
         
 
-        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2021/04/02/k8s_crd/#comments" class="article-comment-link">评论</a></span>
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2021/04/28/serverless/#comments" class="article-comment-link">评论</a></span>
         
       </div>
     </div>
     <div class="article-entry marked-body" itemprop="articleBody">
       
-        <h1 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h1><p>官方解释：CustomResourceDefinition API 资源允许你定义定制资源。 定义 CRD 对象的操作会使用你所设定的名字和模式定义（Schema）<br>创建一个新的定制资源， Kubernetes API 负责为你的定制资源提供存储和访问服务。 CRD 对象的名称必须是合法的 DNS 子域名。</p>
-<p>DNS子域名规则如下：</p>
-<ul>
-<li>不能超过253个字符</li>
-<li>只能包含小写字母、数字，以及’-‘ 和 ‘.’</li>
-<li>须以字母数字开头</li>
-<li>须以字母数字结尾</li>
+        <h4 id="一、Serverless是什么"><a href="#一、Serverless是什么" class="headerlink" title="一、Serverless是什么"></a>一、Serverless是什么</h4><p>Serverless计算是指构建和运行不需要服务器管理的应用程序的概念。它描述了一种更细粒度的部署模型，应用程序捆绑一个或多个function，上载到平台，然后执行，缩放和计费，以响应当前所需的确切需求。<br>Serverless计算并不意味着我们不再使用服务器来托管和运行代码；也不意味着不再需要运维工程师。相反，它指的是serverless计算的消费者（开发人员）不再需要花费时间和资源来进行服务器配置，维护，更新，扩展和容量规划。相反，所有这些任务和功能都由serverless平台处理，并完全从开发人员和IT/运维团队中抽象出来。因此，开发人员专注于编写应用程序的业务逻辑。运维工程师能够将重点更多的放到关键业务任务上。  </p>
+<h4 id="二、Serverless的发展"><a href="#二、Serverless的发展" class="headerlink" title="二、Serverless的发展"></a>二、Serverless的发展</h4><p>在软件研发领域，绕不开的 2 个环节是软件的部署和运维。如果我们要上线一个业务。<br><strong>在 On-Premise 阶段</strong>，需要购买物理服务器，可能还需要自建机房、安装制冷设备、招聘运维人员，然后再在上面搭建一系列的基础设施，比如：虚拟化、操作系统、容器、Runtime，Runtime 可以理解为像 Python、golang、Node.js 这类软件。接下来我们要去安装软件类的开发框架。最后，我们才会去编写我们真正需要的业务函数。<br><strong>在IaaS阶段</strong>，云厂商维护了硬件和虚拟化这 2 个基础设施，到了 PaaS 层云厂商又维护了 OS、容器和 Runtime。<br><strong>在FaaS阶段</strong>，用户只需要关注 Function，也就是只需要关注自己的业务逻辑。可以看到随着阶段的演进用户需要关注的点越来越少，越来越聚焦于自己的业务逻辑。<br>所以在 On-Premise 阶段我们开发一个业务可能需要 8 个人，在 FaaS 阶段，我们只需要 2 个业务，节省的人力可以投入到业务研发这块儿，提高产品的迭代速度，进而提高产品竞争力。过去十多年，云计算其实是一个「去基础架构」的过程。这个过程可以让用户聚焦于自己真正需要的业务开发上，而不是底层的计算资源上。Serverless 符合云计算发展的方向，是云的终极形态，这种特有的模式使 Serverless 存在潜在的巨大价值。</p>
+<h4 id="三、Serverless的角色："><a href="#三、Serverless的角色：" class="headerlink" title="三、Serverless的角色："></a>三、Serverless的角色：</h4><p><strong>Developer/开发人员：</strong><br>为serverless平台编写代码并从中获益，serverless平台提供了这样的视角：没有服务器，而代码始终在运行。<br><strong>Provider/平台管理者：</strong><br>为外部或内部客户部署serverless平台。运行serverless平台仍然需要服务器。平台管理者需要管理服务器（或虚拟机和容器）。即使在空闲时，平台管理者也会有一些运行平台的成本。通常一个团队充当平台管理者，其他的团队充当开发人员。</p>
+<h4 id="四、Serverless提供什么："><a href="#四、Serverless提供什么：" class="headerlink" title="四、Serverless提供什么："></a>四、Serverless提供什么：</h4><p><strong>Functions-as-a-Service (FaaS)</strong> ，通常提供事件驱动计算。开发人员使用由事件或HTTP请求触发的function来运行和管理应用程序代码。 开发人员将代码的小型单元部署到FaaS，这些代码根据需要作为离散动作执行，无需管理服务器或任何其他底层基础设施即可进行扩展。<br><strong>Backend-as-a-Service (BaaS)</strong> ，它是基于API的第三方服务，可替代应用程序中的核心功能子集。因为这些API是作为可以自动扩展和透明操作的服务而提供的，所以对于开发人员表现为是serverless。</p>
+<h4 id="五、Serverless为开发人员带来什么好处："><a href="#五、Serverless为开发人员带来什么好处：" class="headerlink" title="五、Serverless为开发人员带来什么好处："></a>五、Serverless为开发人员带来什么好处：</h4><ul>
+<li>零服务器运维：serverless通过消除维护服务器资源所涉及的开销，显着改变了运行软件应用程序的成本模型。</li>
+<li>无需配置，更新和管理服务器基础设施：管理服务器，虚拟机和容器对于公司而言是一项重大费用，其中包括人员，工具，培训和时间。Serverless大大减少了这种费用。</li>
+<li>灵活的可扩展性：serverless的FaaS或BaaS产品可以即时而精确地扩展，以处理每个单独的传入请求。对于开发人员来说，serverless平台没有“预先计划容量”的概念，也不需要配置“自动缩放”的触发器或规则。缩放可以在没有开发人员干预的情况下自动进行。完成请求处理后，serverless FaaS会自动收缩计算资源，因此不会有空闲容量。</li>
+<li>闲置时无计算成本：从消费者的角度来看，serverless产品的最大好处之一是空闲容量不会产生任何成本。例如，serverless计算服务不对空闲虚拟机或容器收费; 换句话说，当代码没有运行或者没有进行有意义的工作时，不收费。 对于数据库，数据库引擎容量空闲等待请求时无需收费。当然，这不包括其他成本，例如有状态存储成本或添加的功能/功能/特性集。</li>
 </ul>
-<p>简单来说，你可以定义像k8s原生资源如deployment、service一样定义自己的资源，而k8s会为你提供存储（ETCD）,访问（kube-apiserver）。</p>
-<h1 id="脚手架"><a href="#脚手架" class="headerlink" title="脚手架"></a>脚手架</h1><p>kubebuilder 和 operator sdk, 个人只使用过kubebuilder。</p>
-<h1 id="安装kubebuilder"><a href="#安装kubebuilder" class="headerlink" title="安装kubebuilder"></a>安装kubebuilder</h1><h3 id="依赖"><a href="#依赖" class="headerlink" title="依赖"></a>依赖</h3><p>1、docker<br>2、go 建议版本在1.12以上，支持 go mod<br>3、kustomize</p>
-<h3 id="代理配置"><a href="#代理配置" class="headerlink" title="代理配置"></a>代理配置</h3><p>配置一下 终端代理，因为初始化时会拉去go的依赖包。<br>go 1.12之下开启 go module</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> GOPROXY=https://goproxy.io</span><br><span class="line"><span class="built_in">export</span> GO111MODULE=on</span><br></pre></td></tr></table></figure>
-<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p><strong>一、安装kubebuilder</strong><br>执行如下命令。（如果curl下载失败，大概率是网络原因，可以手动下载，解压到指定目录）。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">os= $(go env GOOS)</span><br><span class="line">arch=$(go env GOARCH)</span><br><span class="line">curl -L https://go.kubebuilder.io/dl/2.3.1/<span class="variable">$&#123;os&#125;</span>/<span class="variable">$&#123;arch&#125;</span> | tar -xz -C /tmp/</span><br><span class="line">sudo mv /tmp/kubebuilder_2.3.1_<span class="variable">$&#123;os&#125;</span>_<span class="variable">$&#123;arch&#125;</span> /usr/<span class="built_in">local</span>/kubebuilder</span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$PATH</span>:/usr/<span class="built_in">local</span>/kubebuilder/bin</span><br></pre></td></tr></table></figure>
-<p><strong>二、安装kustomize</strong></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew install kustomize </span><br></pre></td></tr></table></figure>
-<p><strong>三、安装完成后查看版本信息</strong></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ kubebuilder version</span><br><span class="line">Version: version.Version&#123;KubeBuilderVersion:<span class="string">&quot;2.3.1&quot;</span>, KubernetesVendor:<span class="string">&quot;1.16.4&quot;</span>, GitCommit:<span class="string">&quot;8b53abeb4280186e494b726edf8f54ca7aa64a49&quot;</span>, BuildDate:<span class="string">&quot;2020-03-26T16:42:00Z&quot;</span>, GoOs:<span class="string">&quot;unknown&quot;</span>, GoArch:<span class="string">&quot;unknown&quot;</span>&#125;</span><br><span class="line"><span class="comment"># sam @ MacBook-Pro-2 in ~/tf/alitest [10:45:37]</span></span><br><span class="line">$ kustomize version</span><br><span class="line">&#123;Version:kustomize/v3.8.2 GitCommit:e2973f6ecc9be6187cfd5ecf5e180f842249b3c6 BuildDate:2020-09-02T07:01:55+01:00 GoOs:darwin GoArch:amd64&#125;</span><br></pre></td></tr></table></figure>
-<p><strong>四、初始化工程</strong>  </p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">kubebuilder init --domain my.crd.com  //初始化工程</span><br><span class="line">kubebuilder create api --group custom --version v1 --kind Unit //生成脚手架代码</span><br></pre></td></tr></table></figure>
-<p> <strong>group</strong>: 比如资源文件的apps/v1, apps即为分组，还有其他extensions、cores等。  </p>
-<p> <strong>version</strong>: 顾名思义、v1即为版本。  </p>
-<p> <strong>kind</strong>: API “顶级”资源对象的类型，每个资源对象都需要 Kind 来区分它自身代表的资源类型。比如 pod,deployment.  </p>
-<p> <strong>resource</strong>: 通过 HTTP 协议以 JSON 格式发送或者读取的资源展现形式，可以以单个资源对象展现。  </p>
-<p> <strong>GVK(group、version、kind)</strong>:<br>同 Kind 不止可以出现在同一分组的不同版本中，如 apps/v1beta1 与 apps/v1，它还可能出现在不同的分组中，例如 Deployment 开始以 alpha 的特性出现在 extensions 分组，GA 之后被推进到 apps 组，所以为了严格区分不同的 Kind，需要组合 API Group、API Version 与 Kind 成为 GVK。  </p>
-<p> <strong>GVR(group、version、resource)</strong>:<br>GVR 常用于组合成 RESTful API 请求路径。例如，针对应用程序 v1 部署的 RESTful API 请求如下所示：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GET /apis/apps/v1/namespaces/&#123;namespace&#125;/deployments/&#123;name&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="六、Serverless用例"><a href="#六、Serverless用例" class="headerlink" title="六、Serverless用例"></a>六、Serverless用例</h4><p>虽然serverless计算广泛使用，但它仍然相对较新。通常，当工作负载为以下情况时，应将serverless方法视为首选：</p>
+<ul>
+<li>异步，并发，易于并行化为独立的工作单元</li>
+<li>不经常或有零星的需求，在扩展要求方面存在巨大的，不可预测的差异</li>
+<li>无状态，短暂的，对瞬间冷启动时间没有重大需求</li>
+<li>在业务需求变更方面具有高度动态性，需要加快开发人员的速度</li>
+</ul>
+<h5 id="多媒体处理"><a href="#多媒体处理" class="headerlink" title="多媒体处理"></a>多媒体处理</h5><p>一个常见的用例，也是最早具体化的用例之一，是响应新文件上传执行一些转换过程的函数。 例如，如果将图像上载到诸如Amazon S3的对象存储服务，则该事件触发函数，用于创建图像的缩略图版本并将其存储回另一个对象存储桶或Database-as-a-Service。 这是一个相当原子化，可并行化的计算任务示例，该计算任务不经常运行并根据需求进行伸缩。</p>
+<p>例子包括：<br>通过将每个视频帧通过图像识别服务来自动分类电影，以提取演员，情感和对象; 或处理灾区的无人机镜头以估计损坏的程度。</p>
+<h5 id="数据库更改或更改数据捕获（CDC）"><a href="#数据库更改或更改数据捕获（CDC）" class="headerlink" title="数据库更改或更改数据捕获（CDC）"></a>数据库更改或更改数据捕获（CDC）</h5><p>在此场景中，当从数据库插入，修改或删除数据时调用function。在这种情况下，它的功能类似于传统的SQL触发器，几乎就像是与主同步流并行的副作用或动作。其结果是执行一个异步逻辑，可以修改同一个数据库中的某些内容（例如记录到审计表），或者依次调用外部服务（例如发送电子邮件）或更新其他数据库，例如 DB CDC（更改数据捕获）用例的情况。 由于业务需要和处理变更的服务分布的原因，这些用例的频率以及对原子性和一致性的需要可能不同。</p>
+<p>例子包括：</p>
+<p>审核对数据库的更改，或确保它们满足特定质量或分析标准以进行可接受的更改。</p>
+<p>在输入数据时或之后不久自动将数据翻译为其他语言。</p>
+<h5 id="IoT-物联网传感器输入消息"><a href="#IoT-物联网传感器输入消息" class="headerlink" title="IoT/物联网传感器输入消息"></a>IoT/物联网传感器输入消息</h5><p>随着连接到网络的自主设备的爆炸式增加，额外的流量体积庞大，并且使用比HTTP更轻量级的协议。 高效的云服务必须能够快速响应消息并扩展以响应其扩散或突然涌入的消息。Serverless功能可以有效地管理和过滤来自IoT设备的MQTT消息。 它们既可以弹性扩展，也可以屏蔽负载下游的其他服务。</p>
+<p>例子包括：</p>
+<p>在物联网设备（如AWS Greengrass）上使用serverless来收集本地传感器数据，对其进行规范化，与触发器进行比较，并将事件推送到聚合单元/云。</p>
+<h5 id="大规模流处理"><a href="#大规模流处理" class="headerlink" title="大规模流处理#"></a>大规模流处理#</h5><p>另一种非事务性，非请求/响应类型的工作负载是在可能无限的消息流中处理数据。 函数可以连接到消息源，而消息必须从事件流中读取和处理。 鉴于高性能，高弹性和计算密集型处理工作负载，这对于serverless而言非常重要。 在许多情况下，流处理需要将数据与一组上下文对象（在NoSQL或in-mem DB中）进行比较，或者将数据从流聚合并存储到对象或数据库系统中。</p>
+<p>例子包括：</p>
+<p>Mike Roberts有一个很好的 Java/AWS Kinesis 示例 ，可以有效地处理数十亿条消息。</p>
+<p>SnapChat 在Google AppEngine上使用serverless 处理邮件。</p>
+<h5 id="聊天机器人"><a href="#聊天机器人" class="headerlink" title="聊天机器人#"></a>聊天机器人#</h5><p>与人类交互不一定需要毫秒级别的响应时间，并且在许多方面，稍微延迟让回复人类的机器人对话感觉更自然。因此，等待从冷启动加载function的初始等待时间可能是可接受的。当添加到Facebook，WhatsApp或Slack等流行的社交网络时，机器人可能还需要具有极高的可扩展性，因此在PaaS或IaaS模型中预先设置一个永远在线的守护程序，以预测突然或高峰需求，可能不会有作为serverless方法的高效或成本效益。</p>
+<p>例子包括：</p>
+<p>支持和销售机器人插入到大型社交媒体服务，如Facebook或其他高流量网站。</p>
+<p>消息应用程序Wuu使用Google Cloud Functions使用户能够创建和共享在数小时或数秒内消失的内容。</p>
+<p>另请参阅下面的HTTP REST API和Web应用程序。</p>
+<h5 id="批处理作业或计划任务"><a href="#批处理作业或计划任务" class="headerlink" title="批处理作业或计划任务#"></a>批处理作业或计划任务#</h5><p>每天只需几分钟就能以异步方式进行强大的并行计算，IO或网络访问的作业非常适合serverless。作业可以在以弹性方式运行时有效地消费他们所需的资源，并且在不被使用的当天剩余时间内不会产生资源成本。</p>
+<p>例子包括：</p>
+<p>计划任务可以是每晚运行的备份作业。<br>并行发送许多电子邮件的作业会扩展function实例。</p>
+<h5 id="HTTP-REST-API和Web应用程序"><a href="#HTTP-REST-API和Web应用程序" class="headerlink" title="HTTP REST API和Web应用程序#"></a>HTTP REST API和Web应用程序#</h5><p>传统的请求/响应工作负载仍然非常适合serverless，无论工作负载是静态网站还是使用JavaScript或Python等编程语言按需生成响应。即使它们可能会为第一个用户带来启动成本，但在其他计算模型中存在这种延迟的先例，例如将JavaServer Page初始编译为servlet，或者启动新的JVM来处理额外的负载。好处是单个REST调用（例如，微服务中的GET，POST，UPDATE和DELETE 4端点中的每一个）可以独立扩展并单独计费，即使它们共享公共数据后端。</p>
+<p>例子包括：</p>
+<p>移植到serverless架构的澳大利亚人口普查显示了开发速度，成本改进和自动扩展。<br>“如何通过无服务器将我的AWS账单削减90％。”<br>AutoDesk示例：“成本只占传统云方法的一小部分（约1％）。”<br>在线编码/教育（考试，测试等）在事件驱动的环境中运行训练代码，并基于与该训练的结果和预期结果的比较向用户提供反馈。Serverless平台根据需要运行应答检查并根据需要进行扩展，仅在代码运行的时间内需要付费。</p>
+<h5 id="移动后端"><a href="#移动后端" class="headerlink" title="移动后端#"></a>移动后端#</h5><p>使用serverless进行移动后端任务也很有吸引力。它允许开发人员在BaaS API之上构建REST API后端工作负载，因此他们可以花时间优化移动应用程序，而不是扩展后端。 例子包括：优化视频游戏的图形，而不是在游戏成为病毒式打击时投资服务器; 或者对于需要快速迭代以发现产品/市场适合性，或者上市时间至关重要的消费者业务应用程序。另一个示例是批量通知用户或程序其他异步任务以获得离线优先体验。</p>
+<p>例子包括：</p>
+<p>需要少量服务器端逻辑的移动应用程序; 开发人员可以将精力集中在原生代码开发上。<br>使用已配置的安全策略（例如Firebase身份验证/规则或Amazon Cognito）通过事件触发的serverless计算使用直接从移动设备访问BaaS的移动应用程序。<br>“Throwaway”或短期使用的移动应用程序，例如大型会议的调度应用程序，在会议前后的周末几乎没有需求，但需要极大的扩展和收缩; 在周一和周二早上的活动过程中根据时间表查看要求，然后在午夜时分回到主题演讲。</p>
+<h5 id="业务逻辑"><a href="#业务逻辑" class="headerlink" title="业务逻辑#"></a>业务逻辑#</h5><p>当与管理和协调function一起部署时，在业务流程中执行一系列步骤的微服务工作负载的编排是serverless计算的另一个好用例。执行特定业务逻辑的function（例如订单请求和批准，股票交易处理等）可以与有状态管理器一起安排和协调。来自客户端门户的事件请求可以由这样的协调function提供服务，并传递给适当的serverless function。</p>
+<p>例子包括：</p>
+<p>交易台，处理股票市场交易并处理客户的交易订单和确认。协调器使用状态图管理交易。初始状态接受来自客户端门户的交易请求，并将请求传递给微服务function以解析请求并验证客户端。随后的状态根据买入或卖出交易指导工作流，验证基金余额，股票代码等，并向客户发送确认。在从客户端接收到确认请求事件时，后续状态调用管理交易执行的function，更新账户，并通知客户完成交易。</p>
+<h5 id="持续集成管道"><a href="#持续集成管道" class="headerlink" title="持续集成管道#"></a>持续集成管道#</h5><p>传统的CI管道包括一个构建从属主机池，它们处于空闲等待以便分派作业。Serverless是一种很好的模式，可以消除对预配置主机的需求并降低成本。构建作业由新代码提交或PR合并触发。 调用function来运行构建和测试用例，仅在所需的时间内执行，并且在未使用时不会产生成本。这降低了成本，并可通过自动扩展来减少瓶颈以满足需求。</p>
+
       
     </div>
     <div class="article-footer">
@@ -418,7 +439,7 @@
     
     <li class="post-copyright-link hidden-xs">
       <strong>本文链接：</strong>
-      <a href="https://acodetailor.github.io/2021/04/02/k8s_crd/" title="Kubernetes CRD -- kubebuilder搭建" target="_blank" rel="external">https://acodetailor.github.io/2021/04/02/k8s_crd/</a>
+      <a href="https://acodetailor.github.io/2021/04/28/serverless/" title="Serverless之介绍" target="_blank" rel="external">https://acodetailor.github.io/2021/04/28/serverless/</a>
     </li>
     
     <li class="post-copyright-license">
@@ -459,12 +480,12 @@
   <ul class="pager pull-left">
     
     <li class="prev">
-      <a href="/2021/04/07/terraform_cloud/" title="terraform cloud CLI"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
+      <a href="/2021/04/30/knative/" title="Serverless之Knative流量转发"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
     </li>
     
     
     <li class="next">
-      <a href="/2021/03/30/terraform/" title="Terraform介绍"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+      <a href="/2021/04/24/java_oom/" title="java的OOM问题"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
     </li>
     
     

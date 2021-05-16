@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000" />
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top" />
+  
+  
+  <title>Serverless之Knative流量转发 | Lakers</title>
+  <meta name="description" content="前边说过Knative是基于K8s部署的，使用k8s的容器管理功能以及istio的网络管理功能，下边一起看一下Knative的流量是怎么转发的吧。 一、Knative资源介绍Knative资源knative主要分为三个组件，build、server、event，分别处理CI&#x2F;CD,服务伸缩，事件驱动。流量转发主要由server这部分处理。  knative service knative ingr">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Serverless之Knative流量转发">
+<meta property="og:url" content="https://acodetailor.github.io/2021/04/30/knative/index.html">
+<meta property="og:site_name" content="Sam">
+<meta property="og:description" content="前边说过Knative是基于K8s部署的，使用k8s的容器管理功能以及istio的网络管理功能，下边一起看一下Knative的流量是怎么转发的吧。 一、Knative资源介绍Knative资源knative主要分为三个组件，build、server、event，分别处理CI&#x2F;CD,服务伸缩，事件驱动。流量转发主要由server这部分处理。  knative service knative ingr">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://acodetailor.github.io/image/serverless/serverless.png">
+<meta property="og:image" content="https://acodetailor.github.io/image/serverless/serverless0.6.jpg">
+<meta property="og:image" content="https://acodetailor.github.io/image/serverless/serverless0.6-pod.jpg">
+<meta property="article:published_time" content="2021-04-30T01:40:25.368Z">
+<meta property="article:modified_time" content="2021-05-16T14:34:40.083Z">
+<meta property="article:author" content="Sam">
+<meta property="article:tag" content="knative">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://acodetailor.github.io/image/serverless/serverless.png">
+  <!-- Canonical links -->
+  <link rel="canonical" href="https://acodetailor.github.io/2021/04/30/knative/index.html">
+  
+    <link rel="alternate" href="/atom.xml" title="Sam" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  
+  
+  
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body class="main-center theme-purple" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="https://github.com/acodetailor" target="_blank">
+          <img class="img-circle img-rotate" src="/images/avatar.png" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">Sam</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md"></h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> QingDao, China</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="想要查找什么..." x-webkit-speech />
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav ">
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">首页</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">归档</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories">
+            
+            <i class="icon icon-folder"></i>
+            
+            <span class="menu-title">分类</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            
+            <i class="icon icon-tags"></i>
+            
+            <span class="menu-title">标签</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-repository">
+          <a href="/repository">
+            
+            <i class="icon icon-project"></i>
+            
+            <span class="menu-title">项目</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-books">
+          <a href="/books">
+            
+            <i class="icon icon-book-fill"></i>
+            
+            <span class="menu-title">书单</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-links">
+          <a href="/links">
+            
+            <i class="icon icon-friendship"></i>
+            
+            <span class="menu-title">友链</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            
+            <i class="icon icon-cup-fill"></i>
+            
+            <span class="menu-title">关于</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/acodetailor" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <p>大爷常来啊!</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget-body">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Cloud/">Cloud</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/k8s/">k8s</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/terraform/">terraform</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%BF%90%E7%BB%B4/">运维</a><span class="category-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget-body">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/k8s/" rel="tag">k8s</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/knative/" rel="tag">knative</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/oom/" rel="tag">oom</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/terraform/" rel="tag">terraform</a><span class="tag-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/k8s/" style="font-size: 14px;">k8s</a> <a href="/tags/knative/" style="font-size: 13px;">knative</a> <a href="/tags/oom/" style="font-size: 13.5px;">oom</a> <a href="/tags/terraform/" style="font-size: 13.5px;">terraform</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/05/">五月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">四月 2021</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">三月 2021</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/k8s/">k8s</a>
+              </p>
+              <p class="item-title">
+                <a href="/2021/05/16/serverless-istio/" class="title">Serverless之Knative</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-05-16T12:59:42.740Z" itemprop="datePublished">2021-05-16</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/k8s/">k8s</a>
+              </p>
+              <p class="item-title">
+                <a href="/2021/04/30/knative/" class="title">Serverless之Knative流量转发</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-04-30T01:40:25.368Z" itemprop="datePublished">2021-04-30</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/k8s/">k8s</a>
+              </p>
+              <p class="item-title">
+                <a href="/2021/04/28/serverless/" class="title">Serverless之介绍</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-04-28T06:35:10.932Z" itemprop="datePublished">2021-04-28</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/%E8%BF%90%E7%BB%B4/">运维</a>
+              </p>
+              <p class="item-title">
+                <a href="/2021/04/24/java_oom/" class="title">java的OOM问题</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-04-24T12:11:36.499Z" itemprop="datePublished">2021-04-24</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/k8s/">k8s</a>
+              </p>
+              <p class="item-title">
+                <a href="/2021/04/19/install%20knative/" class="title">Minikube搭建istio和Knative</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-04-19T09:26:51.731Z" itemprop="datePublished">2021-04-19</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-knative" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Serverless之Knative流量转发
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2021/04/30/knative/" class="article-date">
+	  <time datetime="2021-04-30T01:40:25.368Z" itemprop="datePublished">2021-04-30</time>
+	</a>
+</span>
+        
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/categories/k8s/">k8s</a>
+  </span>
+
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link-link" href="/tags/knative/" rel="tag">knative</a>
+  </span>
+
+
+        
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2021/04/30/knative/#comments" class="article-comment-link">评论</a></span>
+        
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <p>前边说过Knative是基于K8s部署的，使用k8s的容器管理功能以及istio的网络管理功能，下边一起看一下Knative的流量是怎么转发的吧。</p>
+<h4 id="一、Knative资源介绍"><a href="#一、Knative资源介绍" class="headerlink" title="一、Knative资源介绍"></a>一、Knative资源介绍</h4><p><strong>Knative资源</strong><br>knative主要分为三个组件，build、server、event，分别处理CI/CD,服务伸缩，事件驱动。<br>流量转发主要由server这部分处理。</p>
+<ul>
+<li>knative service</li>
+<li>knative ingress</li>
+<li>knative serverlessService</li>
+<li>knative route</li>
+<li>knative configuration</li>
+<li>kantive revision  </li>
+</ul>
+<p><strong>istio资源</strong></p>
+<ul>
+<li>Gateway</li>
+<li>virtualService。  </li>
+</ul>
+<h4 id="二、流量转发"><a href="#二、流量转发" class="headerlink" title="二、流量转发"></a>二、流量转发</h4><h5 id="官方架构"><a href="#官方架构" class="headerlink" title="官方架构"></a>官方架构</h5><p>先回顾一下Knative官方的一个简单的原理示意图如下所示。用户创建一个Knative Service（ksvc）后，Knative会自动创建Route（route）、Configuration（cfg）资源，然后cfg会创建对应的Revision（rev）版本。rev实际上又会创建Deployment提供服务，流量最终会根据route的配置，导入到相应的rev中。  </p>
+<p><img src="../../../../image/serverless/serverless.png" alt="reason"></p>
+<h5 id="老版本（0-6）"><a href="#老版本（0-6）" class="headerlink" title="老版本（0.6）"></a>老版本（0.6）</h5><p>在集成使用Istio部署时，Route默认采用的是Istio Ingress Gateway实现，大概在Knative 0.6版本之前，我们可以发现，Route的流量转发本质上是由Istio virtualservice（vs）控制。副本数为0时，其中destination指向的是Activator组件。此时Activator会帮助转发冷启动时的请求。  </p>
+<p><img src="../../../../image/serverless/serverless0.6.jpg" alt="reason">  </p>
+<p>当服务启动后，修改vs将destination指向对应服务实例上。  </p>
+<p><img src="../../../../image/serverless/serverless0.6-pod.jpg" alt="reason">  </p>
+<h5 id="新版本"><a href="#新版本" class="headerlink" title="新版本"></a>新版本</h5><p>我们创建一个简单的hello-go ksvc，并以此进行分析。ksvc如下所示：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">serving.knative.dev/v1alpha1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Service</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">hello-go</span></span><br><span class="line">  <span class="attr">namespace:</span> <span class="string">faas</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">template:</span></span><br><span class="line">    <span class="attr">spec:</span></span><br><span class="line">      <span class="attr">containers:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">image:</span> <span class="string">harbor-yx-jd-dev.yx.netease.com/library/helloworld-go:v0.1</span></span><br><span class="line">        <span class="attr">env:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">TARGET</span></span><br><span class="line">          <span class="attr">value:</span> <span class="string">&quot;Go Sample v1&quot;</span></span><br></pre></td></tr></table></figure>
+<p>virtualservice的变化<br>环境是一个标准的Istio部署，Serverless网关为Istio Ingress Gateway，所以创建完ksvc后，为了验证服务是否可以正常运行，需要发送http请求至网关。Gateway资源已经在部署Knative的时候创建，这里我们只需要关心vs。在服务副本数为0的时候，Knative控制器创建的vs关键配置如下：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">gateways:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">knative-serving/cluster-local-gateway</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">knative-serving/knative-ingress-gateway</span></span><br><span class="line">  <span class="attr">hosts:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">hello-go.faas</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">hello-go.faas.example.com</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">hello-go.faas.svc</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">hello-go.faas.svc.cluster.local</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">f81497077928a654cf9422088e7522d5.probe.invalid</span></span><br><span class="line">  <span class="attr">http:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">match:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">authority:</span></span><br><span class="line">        <span class="attr">regex:</span> <span class="string">^hello-go\.faas\.example\.com(?::\d&#123;1,5&#125;)?$</span></span><br><span class="line">      <span class="attr">gateways:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">knative-serving/knative-ingress-gateway</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">authority:</span></span><br><span class="line">        <span class="attr">regex:</span> <span class="string">^hello-go\.faas(\.svc(\.cluster\.local)?)?(?::\d&#123;1,5&#125;)?$</span></span><br><span class="line">      <span class="attr">gateways:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">knative-serving/cluster-local-gateway</span></span><br><span class="line">    <span class="attr">retries:</span></span><br><span class="line">      <span class="attr">attempts:</span> <span class="number">3</span></span><br><span class="line">      <span class="attr">perTryTimeout:</span> <span class="string">10m0s</span></span><br><span class="line">    <span class="attr">route:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">destination:</span></span><br><span class="line">        <span class="attr">host:</span> <span class="string">hello-go-fpmln.faas.svc.cluster.local</span></span><br><span class="line">        <span class="attr">port:</span></span><br><span class="line">          <span class="attr">number:</span> <span class="number">80</span></span><br></pre></td></tr></table></figure>
+<p>vs指定了已经创建好的gw，同时destination指向的是一个Service域名。这个Service就是Knative默认自动创建的hello-go服务的Service。<br>可以发现vs的ownerReferences指向了一个Knative的CRD ingress.networking.internal.knative.dev：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">ownerReferences:</span></span><br><span class="line"><span class="bullet">-</span> <span class="attr">apiVersion:</span> <span class="string">networking.internal.knative.dev/v1alpha1</span></span><br><span class="line">  <span class="attr">blockOwnerDeletion:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">controller:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">kind:</span> <span class="string">Ingress</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">hello-go</span></span><br><span class="line">  <span class="attr">uid:</span> <span class="string">4a27a69e-5b9c-11ea-ae53-fa163ec7c05f</span></span><br></pre></td></tr></table></figure>
+<p>根据名字可以看到这是一个Knative内部使用的CRD，该CRD的内容其实和vs比较类似，同时ingress.networking.internal.knative.dev的ownerReferences指向了我们熟悉的route，总结下来就是：<br>route -&gt; kingress(ingress.networking.internal.knative.dev) -&gt; vs<br>在网关这一层涉及到的CRD资源就是如上这些。这里kingress的意义在于增加一层抽象，如果我们使用的是其他网关，则会将kingress转换成相应的网关资源配置。最新的版本中，负责kingress到Istio vs的控制器部分代码已经独立出一个项目，可见如今的Knative对Istio已经不是强依赖。<br>现在，我们已经了解到Serverless网关是由Knative控制器最终生成的vs生效到Istio Ingress Gateway上，为了验证我们刚才部署的服务是否可以正常的运行，简单的用curl命令试验一下。</p>
+<p>和所有的网关或者负载均衡器一样，对于7层http访问，我们需要在Header里加域名Host，用于流量转发到具体的服务。在上面的vs中已经可以看到对外域名和内部Service域名均已经配置。所以，只需要：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -v -H<span class="string">&#x27;Host:hello-go.faas.example.com&#x27;</span>  &lt;IngressIP&gt;:&lt;Port&gt; </span><br></pre></td></tr></table></figure>
+<p>其中，IngressIP即网关实例对外暴露的IP。</p>
+<p>对于冷启动来说，目前的Knative需要等十几秒，即会收到请求。根据之前老版本的经验，这个时候vs会被更新，destination指向hello-go的Service。</p>
+<p>不过，现在我们实际发现，vs没有任何变化，仍然指向了服务的Service。对比老版本中服务副本数为0时，其实vs的destination指向的是Activator组件的。但现在，不管服务副本数如何变化，vs一直不变。</p>
+<p>蹊跷只能从destination的Service域名入手。</p>
+<p>revision service探索<br>创建ksvc后，Knative会帮我们自动创建Service如下所示。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl -n faas get svc</span><br><span class="line">NAME                     TYPE           CLUSTER-IP     EXTERNAL-IP                                            PORT(S)      </span><br><span class="line">hello-go                 ExternalName   &lt;none&gt;         cluster-local-gateway.istio-system.svc.cluster.local   &lt;none&gt;           </span><br><span class="line">hello-go-fpmln           ClusterIP      10.178.4.126   &lt;none&gt;                                                 80/TCP             </span><br><span class="line">hello-go-fpmln-m9mmg     ClusterIP      10.178.5.65    &lt;none&gt;                                                 80/TCP,8022/TCP  </span><br><span class="line">hello-go-fpmln-metrics   ClusterIP      10.178.4.237   &lt;none&gt;                                                 9090/TCP,9091/TCP</span><br></pre></td></tr></table></figure>
+<p>hello-go Service是一个ExternalName Service，作用是将hello-go的Service域名增加一个dns CNAME别名记录，指向网关的Service域名。</p>
+<p>根据Service的annotation我们可以发现，Knative对hello-go-fpmln、hello-go-fpmln-m9mmg 、hello-go-fpmln-metrics这三个Service的定位分别为public Service、private Service和metric Service（最新版本已经将private和metrics Service合并）。</p>
+<p>private Service和metric Service其实不难理解。问题的关键就在这里的public Service，仔细研究hello-go-fpmln Service，我们可以发现这是一个没有labelSelector的Service，它的Endpoint不是kubernetes自动创建的，需要额外生成。</p>
+<p>在服务副本数为0时，查看一下Service对应的Endpoint，如下所示：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl -n faas get ep</span><br><span class="line">NAME                     ENDPOINTS                               AGE</span><br><span class="line">hello-go-fpmln           172.31.16.81:8012                       </span><br><span class="line">hello-go-fpmln-m9mmg     172.31.16.121:8012,172.31.16.121:8022   </span><br><span class="line">hello-go-fpmln-metrics   172.31.16.121:9090,172.31.16.121:9091   </span><br></pre></td></tr></table></figure>
+<p>其中，public Service的Endpoint IP是Knative Activator的Pod IP，实际发现Activator的副本数越多这里也会相应的增加。并且由上面的分析可以看到，vs的destination指向的就是public Service。</p>
+<p>输入几次curl命令模拟一下http请求，虽然副本数从0开始增加到1了，但是这里的Endpoint却没有变化，仍然为Activator Pod IP。</p>
+<p>接着使用hey来压测一下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">./hey_linux_amd64 -n 1000000 -c 300  -m GET -host helloworld-go.faas.example.com http://&lt;IngressIP&gt;:80</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>发现Endpoint变化了，通过对比服务的Pod IP，已经变成了新启动的服务Pod IP，不再是Activator Pod的IP。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl -n faas get ep</span><br><span class="line">NAME                     ENDPOINTS                         </span><br><span class="line">helloworld-go-mpk25      172.31.16.121:8012</span><br><span class="line">hello-go-fpmln-m9mmg     172.31.16.121:8012,172.31.16.121:8022   </span><br><span class="line">hello-go-fpmln-metrics   172.31.16.121:9090,172.31.16.121:9091 </span><br></pre></td></tr></table></figure>
+<p>原来，现在新版本的冷启动流量转发机制已经不再是通过修改vs来改变网关的流量转发配置了，而是直接更新服务的public Service后端Endpoint，从而实现将流量从Activator转发到实际的服务Pod上。</p>
+<p>通过将流量的转发功能内聚到Service/Endpoint层，一方面减小了网关的配置更新压力，一方面Knative可以在对接各种不同的网关时的实现时更加解耦，网关层不再需要关心冷启动时的流量转发机制。</p>
+<p>流量路径<br>再深入从上述的三个Service入手研究，它们的ownerReference是serverlessservice.networking.internal.knative.dev(sks)，而sks的ownerReference是podautoscaler.autoscaling.internal.knative.dev(kpa)。</p>
+<p>在压测过程中同样发现，sks会在冷启动过后，会从Proxy模式变为Serve模式：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl -n faas get sks</span><br><span class="line">NAME             MODE    SERVICENAME      PRIVATESERVICENAME     READY   REASON</span><br><span class="line">hello-go-fpmln   Proxy   hello-go-fpmln   hello-go-fpmln-m9mmg   True</span><br><span class="line">$ kubectl -n faas get sks</span><br><span class="line">NAME             MODE    SERVICENAME      PRIVATESERVICENAME     READY   REASON</span><br><span class="line">hello-go-fpmln   Serve   hello-go-fpmln   hello-go-fpmln-m9mmg   True</span><br></pre></td></tr></table></figure>
+<p>这也意味着，当流量从Activator导入的时候，sks为Proxy模式，服务真正启动起来后会变成Serve模式，网关流量直接流向服务Pod。</p>
+<p>从名称上也可以看到，sks和kpa均为Knative内部CRD，实际上也是由于Knative设计上可以支持自定义的扩缩容方式和支持Kubernetes HPA有关，实现更高一层的抽象。</p>
+
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="https://acodetailor.github.io/2021/04/30/knative/" title="Serverless之Knative流量转发" target="_blank" rel="external">https://acodetailor.github.io/2021/04/30/knative/</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://github.com/acodetailor" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/images/avatar.png" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://github.com/acodetailor" target="_blank"><span class="text-dark">Sam</span><small class="ml-1x"></small></a></h3>
+        <div>想上黄金、想成为优秀的程序员。</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    <li class="prev">
+      <a href="/2021/05/16/serverless-istio/" title="Serverless之Knative"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
+    </li>
+    
+    
+    <li class="next">
+      <a href="/2021/04/28/serverless/" title="Serverless之介绍"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+  </ul>
+  
+  
+  <!-- Button trigger modal -->
+  <button type="button" class="btn btn-fancy btn-donate pop-onhover bg-gradient-warning" data-toggle="modal" data-target="#donateModal"><span>赏</span></button>
+  <!-- <div class="wave-icon wave-icon-danger btn-donate" data-toggle="modal" data-target="#donateModal">
+    <div class="wave-circle"><span class="icon"><i class="icon icon-bill"></i></span></div>
+  </div> -->
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter" data-mobile-sites="weibo,qq,qzone"></div>
+    
+  </div>
+  </div>
+</nav>
+  
+<!-- Modal -->
+<div class="modal modal-center modal-small modal-xs-full fade" id="donateModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content donate">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <div class="modal-body">
+        <div class="donate-box">
+          <div class="donate-head">
+            <p>感谢您的支持，我会继续努力的!</p>
+          </div>
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade active in" id="alipay">
+              <div class="donate-payimg">
+                <img src="/images/donate/alipayimg.png" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开支付宝扫一扫，即可进行扫码打赏哦</p>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="wechatpay">
+              <div class="donate-payimg">
+                <img src="/images/donate/wechatpayimg.png" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开微信扫一扫，即可进行扫码打赏哦</p>
+            </div>
+          </div>
+          <div class="donate-footer">
+            <ul class="nav nav-tabs nav-justified" role="tablist">
+              <li role="presentation" class="active">
+                <a href="#alipay" id="alipay-tab" role="tab" data-toggle="tab" aria-controls="alipay" aria-expanded="true"><i class="icon icon-alipay"></i> 支付宝</a>
+              </li>
+              <li role="presentation" class="">
+                <a href="#wechatpay" role="tab" id="wechatpay-tab" data-toggle="tab" aria-controls="wechatpay" aria-expanded="false"><i class="icon icon-wepay"></i> 微信支付</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/acodetailor" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+    	
+        <div class="publishby">
+        	Theme by <a href="https://github.com/cofess" target="_blank"> cofess </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.
+        </div>
+    </div>
+</footer>
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+
+<script src="/js/plugin.min.js"></script>
+
+
+<script src="/js/application.js"></script>
+
+
+    <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+
+
+
+
+   
+
+
+
+
+
+
+
+
+
+</body>
+</html>

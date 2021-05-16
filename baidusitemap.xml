@@ -1,16 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://acodetailor.github.io/2021/04/24/java_oom/</loc>
-    <lastmod>2021-04-24</lastmod>
+    <loc>https://acodetailor.github.io/2021/04/30/knative/</loc>
+    <lastmod>2021-05-16</lastmod>
   </url>
   <url>
-    <loc>https://acodetailor.github.io/2021/04/19/install%20knative/</loc>
-    <lastmod>2021-04-19</lastmod>
+    <loc>https://acodetailor.github.io/2021/04/28/serverless/</loc>
+    <lastmod>2021-05-16</lastmod>
+  </url>
+  <url>
+    <loc>https://acodetailor.github.io/2021/05/16/serverless-istio/</loc>
+    <lastmod>2021-05-16</lastmod>
+  </url>
+  <url>
+    <loc>https://acodetailor.github.io/2021/03/30/terraform/</loc>
+    <lastmod>2021-04-28</lastmod>
   </url>
   <url>
     <loc>https://acodetailor.github.io/2021/04/12/ops-oom/</loc>
-    <lastmod>2021-04-12</lastmod>
+    <lastmod>2021-04-28</lastmod>
+  </url>
+  <url>
+    <loc>https://acodetailor.github.io/2021/04/24/java_oom/</loc>
+    <lastmod>2021-04-28</lastmod>
+  </url>
+  <url>
+    <loc>https://acodetailor.github.io/2021/04/07/terraform_cloud/</loc>
+    <lastmod>2021-04-28</lastmod>
+  </url>
+  <url>
+    <loc>https://acodetailor.github.io/2021/04/02/k8s_crd/</loc>
+    <lastmod>2021-04-28</lastmod>
+  </url>
+  <url>
+    <loc>https://acodetailor.github.io/2021/04/19/install%20knative/</loc>
+    <lastmod>2021-04-28</lastmod>
   </url>
   <url>
     <loc>https://acodetailor.github.io/2021/04/09/TCP/</loc>
@@ -19,17 +43,5 @@
   <url>
     <loc>https://acodetailor.github.io/2021/04/09/Iptabels%20And%20Ipvs/</loc>
     <lastmod>2021-04-09</lastmod>
-  </url>
-  <url>
-    <loc>https://acodetailor.github.io/2021/04/07/terraform_cloud/</loc>
-    <lastmod>2021-04-07</lastmod>
-  </url>
-  <url>
-    <loc>https://acodetailor.github.io/2021/04/02/k8s_crd/</loc>
-    <lastmod>2021-04-02</lastmod>
-  </url>
-  <url>
-    <loc>https://acodetailor.github.io/2021/03/30/terraform/</loc>
-    <lastmod>2021-04-01</lastmod>
   </url>
 </urlset> 
