@@ -6,7 +6,7 @@
   <link href="https://acodetailor.github.io/atom.xml" rel="self"/>
   
   <link href="https://acodetailor.github.io/"/>
-  <updated>2021-09-22T03:13:49.989Z</updated>
+  <updated>2021-09-22T03:25:42.493Z</updated>
   <id>https://acodetailor.github.io/</id>
   
   <author>
@@ -21,14 +21,14 @@
     <link href="https://acodetailor.github.io/2021/09/13/camel/"/>
     <id>https://acodetailor.github.io/2021/09/13/camel/</id>
     <published>2021-09-13T15:46:34.407Z</published>
-    <updated>2021-09-22T03:13:49.989Z</updated>
+    <updated>2021-09-22T03:25:42.493Z</updated>
     
-    <content type="html"><![CDATA[<p>一、简介<br>Camel这个词想必很多java的开发者都很熟悉了，它是一个开源的集成框架，可以通过它快速的使用第三方的组件、调用其他系统的接口。<br>这篇文章要介绍的camelk，其实是Camel+Knative的组合。<br>通过CRD将Camel的组件封装成k8s集群的资源，CRD Controller创建Knative的Service资源，可以同时使用到Knative带来的弹性伸缩、<br>事件驱动等技术优点<br>二、使用<br>下面使用一个例子来进行简单介绍。<br>需求: 通过rest接口提供数据库表的查询。<br>实现：<br><img src="../../../../image/camelk/camelk-test.jpg" alt="reason"><br>延伸：<br>实现还是比较简单的，也不需要重新构建发布。延伸看来，我们可以通过这种方式快速实现数据集成、服务暴露等需求。  </p><p>三、架构<br><img src="../../../../image/camelk/camelk.png" alt="reason">  </p>]]></content>
+    <content type="html"><![CDATA[<h4 id="一、简介"><a href="#一、简介" class="headerlink" title="一、简介"></a>一、简介</h4><p>Camel这个词想必很多java的开发者都很熟悉了，它是一个开源的集成框架，可以通过它快速的使用第三方的组件、调用其他系统的接口。<br>这篇文章要介绍的camelk，其实是Camel+Knative的组合。<br>通过CRD将Camel的组件封装成k8s集群的资源，CRD Controller创建Knative的Service资源，可以同时使用到Knative带来的弹性伸缩、<br>事件驱动等技术优点。</p><h4 id="二、使用"><a href="#二、使用" class="headerlink" title="二、使用"></a>二、使用</h4><p>下面使用一个例子来进行简单介绍。<br><strong>需求</strong>:<br>通过rest接口提供数据库表的查询。<br><strong>实现</strong>:<br><img src="../../../../image/camelk/camelk-test.jpg" alt="reason"><br><strong>延伸</strong>:<br>实现还是比较简单的，也不需要重新构建发布。延伸看来，我们可以通过这种方式快速实现数据集成、服务暴露等需求。    </p><h4 id="三、架构"><a href="#三、架构" class="headerlink" title="三、架构"></a>三、架构</h4><p><img src="../../../../image/camelk/camelk.png" alt="reason">  </p>]]></content>
     
     
       
       
-    <summary type="html">&lt;p&gt;一、简介&lt;br&gt;Camel这个词想必很多java的开发者都很熟悉了，它是一个开源的集成框架，可以通过它快速的使用第三方的组件、调用其他系统的接口。&lt;br&gt;这篇文章要介绍的camelk，其实是Camel+Knative的组合。&lt;br&gt;通过CRD将Camel的组件封装成k8s集</summary>
+    <summary type="html">&lt;h4 id=&quot;一、简介&quot;&gt;&lt;a href=&quot;#一、简介&quot; class=&quot;headerlink&quot; title=&quot;一、简介&quot;&gt;&lt;/a&gt;一、简介&lt;/h4&gt;&lt;p&gt;Camel这个词想必很多java的开发者都很熟悉了，它是一个开源的集成框架，可以通过它快速的使用第三方的组件、调用其他系统的</summary>
       
     
     
