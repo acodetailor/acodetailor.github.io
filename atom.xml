@@ -6,7 +6,7 @@
   <link href="https://acodetailor.github.io/atom.xml" rel="self"/>
   
   <link href="https://acodetailor.github.io/"/>
-  <updated>2021-09-22T03:25:42.493Z</updated>
+  <updated>2021-09-25T15:05:42.758Z</updated>
   <id>https://acodetailor.github.io/</id>
   
   <author>
@@ -15,6 +15,30 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Knative</title>
+    <link href="https://acodetailor.github.io/2021/09/22/knative%E6%BA%90%E7%A0%81%E4%B8%80/"/>
+    <id>https://acodetailor.github.io/2021/09/22/knative%E6%BA%90%E7%A0%81%E4%B8%80/</id>
+    <published>2021-09-22T03:25:42.493Z</published>
+    <updated>2021-09-25T15:05:42.758Z</updated>
+    
+    <content type="html"><![CDATA[<h4 id="一、Knative是什么"><a href="#一、Knative是什么" class="headerlink" title="一、Knative是什么"></a>一、Knative是什么</h4><p>Knative分为三个部分，Serving、Eventing、Building。<br>Serving：主要使用Knative Service部署应用，具有弹性伸缩等功能。<br>Eventing：事件驱动，通过其他内置的资源，实现事件的异步流转。<br>Building：镜像构建。  </p><h4 id="二、Serving架构"><a href="#二、Serving架构" class="headerlink" title="二、Serving架构"></a>二、Serving架构</h4><p><img src="../../../../image/serverless/serving-crd.jpg" alt="reason">  </p><p>如上图所示，当我们手动创建一个Knative的Service资源时，Knative的controller会自动给我们创建如图所示<br>的资源，实现Serving组件的相关功能。 后续详细分析各个controller代码。</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h4 id=&quot;一、Knative是什么&quot;&gt;&lt;a href=&quot;#一、Knative是什么&quot; class=&quot;headerlink&quot; title=&quot;一、Knative是什么&quot;&gt;&lt;/a&gt;一、Knative是什么&lt;/h4&gt;&lt;p&gt;Knative分为三个部分，Serving、Eventing</summary>
+      
+    
+    
+    
+    <category term="k8s" scheme="https://acodetailor.github.io/categories/k8s/"/>
+    
+    
+    <category term="knative" scheme="https://acodetailor.github.io/tags/knative/"/>
+    
+  </entry>
   
   <entry>
     <title>Camelk</title>
