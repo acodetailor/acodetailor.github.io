@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://acodetailor.github.io/2021/04/09/golang/</loc>
+    <lastmod>2021-11-03</lastmod>
+  </url>
+  <url>
+    <loc>https://acodetailor.github.io/2021/04/09/problem/</loc>
+    <lastmod>2021-11-03</lastmod>
+  </url>
+  <url>
     <loc>https://acodetailor.github.io/2021/09/22/knative%E6%BA%90%E7%A0%81%E4%B8%80/</loc>
     <lastmod>2021-09-25</lastmod>
   </url>
@@ -43,13 +51,5 @@
   <url>
     <loc>https://acodetailor.github.io/2021/04/19/install%20knative/</loc>
     <lastmod>2021-04-28</lastmod>
-  </url>
-  <url>
-    <loc>https://acodetailor.github.io/2021/04/09/TCP/</loc>
-    <lastmod>2021-04-09</lastmod>
-  </url>
-  <url>
-    <loc>https://acodetailor.github.io/2021/04/09/Iptabels%20And%20Ipvs/</loc>
-    <lastmod>2021-04-09</lastmod>
   </url>
 </urlset> 

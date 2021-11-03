@@ -17,26 +17,21 @@
   <meta http-equiv="window-target" content="_top" />
   
   
-  <title>记一次OOM的问题排查 | Lakers</title>
-  <meta name="description" content="一、问题现象 三天前，业务的pod重启了，业务想知道具体原因。   二、排查记录 首先排查kubelet日志，蛋疼的是期间业务手动重启了几次，导致不知道pod重启时所在的节点。一个个节点排查kubelet的日志（不知道后续有没有好的方法），找到节点发现日志如下：     kubelet执行PLEG时发现容器挂掉了，直接给拉起了，就是业务前台发现的重启事件。  再排查业务日志，发现只有Killed,">
+  <title>k8s clientSet | Lakers</title>
+  <meta name="description" content="一、背景今天看了一下公司内部CMDB通过SDK暴露接口的代码，结构体十分抽象，看的我有点晕。所以想到了k8s的clientset，就想学习一下，提升一下自己的代码。Do things that are easier to understand, not easier to do。 二、分析过程1、首先要获得根据config来创建各个资源组的client，用来和apiserver交互。 123456">
 <meta property="og:type" content="article">
-<meta property="og:title" content="记一次OOM的问题排查">
-<meta property="og:url" content="https://acodetailor.github.io/2021/04/12/ops-oom/index.html">
+<meta property="og:title" content="k8s clientSet">
+<meta property="og:url" content="https://acodetailor.github.io/2021/04/09/golang/index.html">
 <meta property="og:site_name" content="Sam">
-<meta property="og:description" content="一、问题现象 三天前，业务的pod重启了，业务想知道具体原因。   二、排查记录 首先排查kubelet日志，蛋疼的是期间业务手动重启了几次，导致不知道pod重启时所在的节点。一个个节点排查kubelet的日志（不知道后续有没有好的方法），找到节点发现日志如下：     kubelet执行PLEG时发现容器挂掉了，直接给拉起了，就是业务前台发现的重启事件。  再排查业务日志，发现只有Killed,">
+<meta property="og:description" content="一、背景今天看了一下公司内部CMDB通过SDK暴露接口的代码，结构体十分抽象，看的我有点晕。所以想到了k8s的clientset，就想学习一下，提升一下自己的代码。Do things that are easier to understand, not easier to do。 二、分析过程1、首先要获得根据config来创建各个资源组的client，用来和apiserver交互。 123456">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://acodetailor.github.io/image/problem/0412/%E4%B8%9A%E5%8A%A1%E6%97%A5%E5%BF%97.png">
-<meta property="og:image" content="https://acodetailor.github.io/image/problem/0412/kubelet%E6%97%A5%E5%BF%97.png">
-<meta property="og:image" content="https://acodetailor.github.io/image/problem/0412/%E6%9C%8D%E5%8A%A1%E6%97%A5%E5%BF%97.png">
-<meta property="og:image" content="https://acodetailor.github.io/image/problem/0412/cgroup%E6%97%A5%E5%BF%97.png">
-<meta property="article:published_time" content="2021-04-12T13:03:40.025Z">
-<meta property="article:modified_time" content="2021-04-28T06:34:43.266Z">
+<meta property="article:published_time" content="2021-04-09T06:37:13.851Z">
+<meta property="article:modified_time" content="2021-11-03T09:44:18.887Z">
 <meta property="article:author" content="Sam">
-<meta property="article:tag" content="oom">
+<meta property="article:tag" content="k8s">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://acodetailor.github.io/image/problem/0412/%E4%B8%9A%E5%8A%A1%E6%97%A5%E5%BF%97.png">
   <!-- Canonical links -->
-  <link rel="canonical" href="https://acodetailor.github.io/2021/04/12/ops-oom/index.html">
+  <link rel="canonical" href="https://acodetailor.github.io/2021/04/09/golang/index.html">
   
     <link rel="alternate" href="/atom.xml" title="Sam" type="application/atom+xml">
   
@@ -347,14 +342,14 @@
   
 <main class="main" role="main">
   <div class="content">
-  <article id="post-ops-oom" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+  <article id="post-golang" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
     
     <div class="article-header">
       
         
   
     <h1 class="article-title" itemprop="name">
-      记一次OOM的问题排查
+      k8s clientSet
     </h1>
   
 
@@ -362,57 +357,47 @@
       <div class="article-meta">
         <span class="article-date">
     <i class="icon icon-calendar-check"></i>
-	<a href="/2021/04/12/ops-oom/" class="article-date">
-	  <time datetime="2021-04-12T13:03:40.025Z" itemprop="datePublished">2021-04-12</time>
+	<a href="/2021/04/09/golang/" class="article-date">
+	  <time datetime="2021-04-09T06:37:13.851Z" itemprop="datePublished">2021-04-09</time>
 	</a>
 </span>
         
   <span class="article-category">
     <i class="icon icon-folder"></i>
-    <a class="article-category-link" href="/categories/%E8%BF%90%E7%BB%B4/">运维</a>
+    <a class="article-category-link" href="/categories/k8s/">k8s</a>
   </span>
 
         
   <span class="article-tag">
     <i class="icon icon-tags"></i>
-	<a class="article-tag-link-link" href="/tags/oom/" rel="tag">oom</a>
+	<a class="article-tag-link-link" href="/tags/k8s/" rel="tag">k8s</a>
   </span>
 
 
         
 
-        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2021/04/12/ops-oom/#comments" class="article-comment-link">评论</a></span>
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2021/04/09/golang/#comments" class="article-comment-link">评论</a></span>
         
       </div>
     </div>
     <div class="article-entry marked-body" itemprop="articleBody">
       
-        <h1 id="一、问题现象"><a href="#一、问题现象" class="headerlink" title="一、问题现象"></a>一、问题现象</h1><ul>
-<li>三天前，业务的pod重启了，业务想知道具体原因。</li>
-</ul>
-<p><img src="../../../../image/problem/0412/%E4%B8%9A%E5%8A%A1%E6%97%A5%E5%BF%97.png" alt="reason"></p>
-<h1 id="二、排查记录"><a href="#二、排查记录" class="headerlink" title="二、排查记录"></a>二、排查记录</h1><ul>
-<li>首先排查kubelet日志，蛋疼的是期间业务手动重启了几次，导致不知道pod重启时所在的节点。<br>一个个节点排查kubelet的日志（不知道后续有没有好的方法），找到节点发现日志如下：</li>
-</ul>
-<p><img src="../../../../image/problem/0412/kubelet%E6%97%A5%E5%BF%97.png" alt="reason"></p>
-<p>  kubelet执行PLEG时发现容器挂掉了，直接给拉起了，就是业务前台发现的重启事件。</p>
-<ul>
-<li>再排查业务日志，发现只有Killed,八成是OOM了。日志截图如下：</li>
-</ul>
-<p><img src="../../../../image/problem/0412/%E6%9C%8D%E5%8A%A1%E6%97%A5%E5%BF%97.png" alt="reason"></p>
-<ul>
-<li>下一步排查内核日志，kerenal。发现确实是OOM了。截图如下:</li>
-</ul>
-<p><img src="../../../../image/problem/0412/cgroup%E6%97%A5%E5%BF%97.png" alt="reason"></p>
-<ul>
-<li>然后问题来了，我们的监控发现并没有达到内存的上限，但是cgroup确实达到了上限。真是让人头大啊。</li>
-</ul>
-<h1 id="三、几个命令"><a href="#三、几个命令" class="headerlink" title="三、几个命令"></a>三、几个命令</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">zgrep <span class="string">&quot;&quot;</span> *.gz</span><br><span class="line">journalctl --since <span class="string">&#x27;2021-04-09 22:00&#x27;</span></span><br></pre></td></tr></table></figure>
+        <h4 id="一、背景"><a href="#一、背景" class="headerlink" title="一、背景"></a>一、背景</h4><p>今天看了一下公司内部CMDB通过SDK暴露接口的代码，结构体十分抽象，看的我有点晕。所以想到了k8s的clientset，就想学习一下，提升一下自己的代码。<br>Do things that are easier to understand, not easier to do。</p>
+<h4 id="二、分析过程"><a href="#二、分析过程" class="headerlink" title="二、分析过程"></a>二、分析过程</h4><p>1、首先要获得根据config来创建各个资源组的client，用来和apiserver交互。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">func NewForConfig(c *rest.Config) (*Clientset, error) &#123;</span><br><span class="line">	configShallowCopy :&#x3D; *c</span><br><span class="line">	if configShallowCopy.RateLimiter &#x3D;&#x3D; nil &amp;&amp; configShallowCopy.QPS &gt; 0 &#123;</span><br><span class="line">		if configShallowCopy.Burst &lt;&#x3D; 0 &#123;</span><br><span class="line">			return nil, fmt.Errorf(&quot;burst is required to be greater than 0 when RateLimiter is not set and QPS is set to greater than 0&quot;)</span><br><span class="line">		&#125;</span><br><span class="line">		configShallowCopy.RateLimiter &#x3D; flowcontrol.NewTokenBucketRateLimiter(configShallowCopy.QPS, configShallowCopy.Burst)</span><br><span class="line">	&#125;</span><br><span class="line">	var cs Clientset</span><br><span class="line">	var err error</span><br><span class="line">	cs.admissionregistrationV1, err &#x3D; admissionregistrationv1.NewForConfig(&amp;configShallowCopy)</span><br><span class="line">	if err !&#x3D; nil &#123;</span><br><span class="line">		return nil, err</span><br><span class="line">	&#125;</span><br><span class="line">	cs.admissionregistrationV1beta1, err &#x3D; admissionregistrationv1beta1.NewForConfig(&amp;configShallowCopy)</span><br><span class="line">	if err !&#x3D; nil &#123;</span><br><span class="line">		return nil, err</span><br><span class="line">	&#125;</span><br><span class="line">	cs.internalV1alpha1, err &#x3D; internalv1alpha1.NewForConfig(&amp;configShallowCopy)</span><br><span class="line">	if err !&#x3D; nil &#123;</span><br><span class="line">		return nil, err</span><br><span class="line">	&#125;</span><br><span class="line">	cs.appsV1, err &#x3D; appsv1.NewForConfig(&amp;configShallowCopy)</span><br><span class="line">	if err !&#x3D; nil &#123;</span><br><span class="line">		return nil, err</span><br><span class="line">	&#125;</span><br><span class="line">     ...&#x2F;&#x2F;重复代码，省略。</span><br><span class="line">	cs.DiscoveryClient, err &#x3D; discovery.NewDiscoveryClientForConfig(&amp;configShallowCopy)</span><br><span class="line">	if err !&#x3D; nil &#123;</span><br><span class="line">		return nil, err</span><br><span class="line">	&#125;</span><br><span class="line">	return &amp;cs, nil</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">type Clientset struct &#123;</span><br><span class="line">	*discovery.DiscoveryClient</span><br><span class="line">	admissionregistrationV1      *admissionregistrationv1.AdmissionregistrationV1Client</span><br><span class="line">	admissionregistrationV1beta1 *admissionregistrationv1beta1.AdmissionregistrationV1beta1Client</span><br><span class="line">	internalV1alpha1             *internalv1alpha1.InternalV1alpha1Client</span><br><span class="line">	appsV1                       *appsv1.AppsV1Client</span><br><span class="line">	....&#x2F;&#x2F;各个资源client声明，省略</span><br><span class="line">	schedulingV1alpha1           *schedulingv1alpha1.SchedulingV1alpha1Client</span><br><span class="line">	schedulingV1beta1            *schedulingv1beta1.SchedulingV1beta1Client</span><br><span class="line">	schedulingV1                 *schedulingv1.SchedulingV1Client</span><br><span class="line">	storageV1beta1               *storagev1beta1.StorageV1beta1Client</span><br><span class="line">	storageV1                    *storagev1.StorageV1Client</span><br><span class="line">	storageV1alpha1              *storagev1alpha1.StorageV1alpha1Client</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>2、然后我们选一个组，如appv1的，client声明如下。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">appsV1   *appsv1.AppsV1Client</span><br></pre></td></tr></table></figure>
+<p>对应的结构体</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">type AppsV1Client struct &#123;</span><br><span class="line">	restClient rest.Interface</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>结构体实现了以下方法，实现了该分组下的资源接口的管理</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">func (c *AppsV1Client) ControllerRevisions(namespace string) ControllerRevisionInterface &#123;</span><br><span class="line">	return newControllerRevisions(c, namespace)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func (c *AppsV1Client) DaemonSets(namespace string) DaemonSetInterface &#123;</span><br><span class="line">	return newDaemonSets(c, namespace)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func (c *AppsV1Client) Deployments(namespace string) DeploymentInterface &#123;</span><br><span class="line">	return newDeployments(c, namespace)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func (c *AppsV1Client) ReplicaSets(namespace string) ReplicaSetInterface &#123;</span><br><span class="line">	return newReplicaSets(c, namespace)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func (c *AppsV1Client) StatefulSets(namespace string) StatefulSetInterface &#123;</span><br><span class="line">	return newStatefulSets(c, namespace)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>以deployment为例子，DeploymentInterface包含了deployment资源的所有方法。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">type DeploymentInterface interface &#123;</span><br><span class="line">	Create(ctx context.Context, deployment *v1.Deployment, opts metav1.CreateOptions) (*v1.Deployment, error)</span><br><span class="line">	Update(ctx context.Context, deployment *v1.Deployment, opts metav1.UpdateOptions) (*v1.Deployment, error)</span><br><span class="line">	UpdateStatus(ctx context.Context, deployment *v1.Deployment, opts metav1.UpdateOptions) (*v1.Deployment, error)</span><br><span class="line">	Delete(ctx context.Context, name string, opts metav1.DeleteOptions) error</span><br><span class="line">	DeleteCollection(ctx context.Context, opts metav1.DeleteOptions, listOpts metav1.ListOptions) error</span><br><span class="line">	Get(ctx context.Context, name string, opts metav1.GetOptions) (*v1.Deployment, error)</span><br><span class="line">	List(ctx context.Context, opts metav1.ListOptions) (*v1.DeploymentList, error)</span><br><span class="line">	Watch(ctx context.Context, opts metav1.ListOptions) (watch.Interface, error)</span><br><span class="line">	Patch(ctx context.Context, name string, pt types.PatchType, data []byte, opts metav1.PatchOptions, subresources ...string) (result *v1.Deployment, err error)</span><br><span class="line">	Apply(ctx context.Context, deployment *appsv1.DeploymentApplyConfiguration, opts metav1.ApplyOptions) (result *v1.Deployment, err error)</span><br><span class="line">	ApplyStatus(ctx context.Context, deployment *appsv1.DeploymentApplyConfiguration, opts metav1.ApplyOptions) (result *v1.Deployment, err error)</span><br><span class="line">	GetScale(ctx context.Context, deploymentName string, options metav1.GetOptions) (*autoscalingv1.Scale, error)</span><br><span class="line">	UpdateScale(ctx context.Context, deploymentName string, scale *autoscalingv1.Scale, opts metav1.UpdateOptions) (*autoscalingv1.Scale, error)</span><br><span class="line"></span><br><span class="line">	DeploymentExpansion</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这样就可以通过如下类似builder模式来调用，感觉还是很简洁、清楚的。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">client.AppsV1().Deployments(<span class="string">&quot;test&quot;</span>).List(ctx,opts)</span><br></pre></td></tr></table></figure>
 
-<h1 id="四、引申问题"><a href="#四、引申问题" class="headerlink" title="四、引申问题"></a>四、引申问题</h1><ul>
-<li>1、cgroup的机制</li>
-<li>2、java的内存机制</li>
-</ul>
+<p><strong>每次读k8s的代码都有收获！</strong></p>
 
       
     </div>
@@ -422,7 +407,7 @@
     
     <li class="post-copyright-link hidden-xs">
       <strong>本文链接：</strong>
-      <a href="https://acodetailor.github.io/2021/04/12/ops-oom/" title="记一次OOM的问题排查" target="_blank" rel="external">https://acodetailor.github.io/2021/04/12/ops-oom/</a>
+      <a href="https://acodetailor.github.io/2021/04/09/golang/" title="k8s clientSet" target="_blank" rel="external">https://acodetailor.github.io/2021/04/09/golang/</a>
     </li>
     
     <li class="post-copyright-license">
@@ -463,12 +448,12 @@
   <ul class="pager pull-left">
     
     <li class="prev">
-      <a href="/2021/04/19/install%20knative/" title="Minikube搭建istio和Knative"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
+      <a href="/2021/04/09/problem/" title="记一次超级坑的问题排查"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
     </li>
     
     
     <li class="next">
-      <a href="/2021/04/09/problem/" title="记一次超级坑的问题排查"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+      <a href="/2021/04/07/terraform_cloud/" title="terraform cloud CLI"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
     </li>
     
     

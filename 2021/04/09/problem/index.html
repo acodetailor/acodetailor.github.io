@@ -17,20 +17,21 @@
   <meta http-equiv="window-target" content="_top" />
   
   
-  <title>友情链接 | Lakers</title>
-  <meta name="description" content="杂记">
-<meta property="og:type" content="website">
-<meta property="og:title" content="友情链接">
-<meta property="og:url" content="https://acodetailor.github.io/links/index.html">
+  <title>记一次超级坑的问题排查 | Lakers</title>
+  <meta name="description" content="一、问题描述问题①：之前开发了一个功能，通过页面初始化gitlab代码脚手架，周一来想新建一个工程时，创建失败。gitlab仓库初始化成功，每次创建了一个文件时就失败了。 问题②：问题①解决后，线上流水线打包失败，提示net&#x2F;http包要求go 1.17而我们用的是1.13. 二、排查过程问题①：本地debug，发现每次在gitlab创建文件时，第一个文件会初始化成功，但是第二个就会报400。没有">
+<meta property="og:type" content="article">
+<meta property="og:title" content="记一次超级坑的问题排查">
+<meta property="og:url" content="https://acodetailor.github.io/2021/04/09/problem/index.html">
 <meta property="og:site_name" content="Sam">
-<meta property="og:description" content="杂记">
+<meta property="og:description" content="一、问题描述问题①：之前开发了一个功能，通过页面初始化gitlab代码脚手架，周一来想新建一个工程时，创建失败。gitlab仓库初始化成功，每次创建了一个文件时就失败了。 问题②：问题①解决后，线上流水线打包失败，提示net&#x2F;http包要求go 1.17而我们用的是1.13. 二、排查过程问题①：本地debug，发现每次在gitlab创建文件时，第一个文件会初始化成功，但是第二个就会报400。没有">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2021-03-30T07:24:39.646Z">
-<meta property="article:modified_time" content="2021-03-30T07:24:39.646Z">
+<meta property="article:published_time" content="2021-04-09T06:37:26.865Z">
+<meta property="article:modified_time" content="2021-11-03T09:41:05.778Z">
 <meta property="article:author" content="Sam">
+<meta property="article:tag" content="problem">
 <meta name="twitter:card" content="summary">
   <!-- Canonical links -->
-  <link rel="canonical" href="https://acodetailor.github.io/links/index.html">
+  <link rel="canonical" href="https://acodetailor.github.io/2021/04/09/problem/index.html">
   
     <link rel="alternate" href="/atom.xml" title="Sam" type="application/atom+xml">
   
@@ -47,7 +48,7 @@
 <meta name="generator" content="Hexo 5.4.0"></head>
 
 
-<body class="main-center theme-purple no-sidebar" itemscope itemtype="http://schema.org/WebPage">
+<body class="main-center theme-purple" itemscope itemtype="http://schema.org/WebPage">
   <header class="header" itemscope itemtype="http://schema.org/WPHeader">
   <div class="slimContent">
     <div class="navbar-header">
@@ -338,66 +339,177 @@
 </aside>
 
   
-  <main class="main" role="main">
-  <article class="article article-links article-type-list" itemscope="">
-  <header class="article-header">
-    <h1 itemprop="title">友情链接</h1>
-    <p class="text-muted">
-      欢迎交换链接，可在当前页面留言
-    </p>
-  </header>
-  <div class="article-body">
-    <div class="row">
+  
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-problem" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
       
         
-          <div class="col-sm-6 col-md-4">
-            <div class="panel panel-default hover-shadow hover-grow">
-              <figure class="media media-middle">
-                <div class="media-left pr-no">
-                  <a href="http://chuangzaoshi.com/" target="_blank" class="img-burn thumb-md media-middle">
-                    <img src="/images/favatar/chuangzaoshi-logo.png" class="w-full" alt="">
-                  </a>
-                </div>
-                <div class="media-body p-0x">
-                  <h4 class="media-heading"><a href="http://chuangzaoshi.com/" target="_blank"><span class="text-dark">创造狮</span></a></h4>
-                  <div class="text-muted">
-                    为创意工作者而设计
-                  </div>
-                </div>
-              </figure>
-            </div>
-          </div>
-          
+  
+    <h1 class="article-title" itemprop="name">
+      记一次超级坑的问题排查
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2021/04/09/problem/" class="article-date">
+	  <time datetime="2021-04-09T06:37:26.865Z" itemprop="datePublished">2021-04-09</time>
+	</a>
+</span>
         
-          <div class="col-sm-6 col-md-4">
-            <div class="panel panel-default hover-shadow hover-grow">
-              <figure class="media media-middle">
-                <div class="media-left pr-no">
-                  <a href="http://idesign.qq.com/" target="_blank" class="img-burn thumb-md media-middle">
-                    <img src="/images/favatar/idesign-logo.png" class="w-full" alt="">
-                  </a>
-                </div>
-                <div class="media-body p-0x">
-                  <h4 class="media-heading"><a href="http://idesign.qq.com/" target="_blank"><span class="text-dark">腾讯设计导航</span></a></h4>
-                  <div class="text-muted">
-                    网罗全网高逼格的设计站点
-                  </div>
-                </div>
-              </figure>
-            </div>
-          </div>
-          
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/categories/problem/">problem</a>
+  </span>
+
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link-link" href="/tags/problem/" rel="tag">problem</a>
+  </span>
+
+
+        
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2021/04/09/problem/#comments" class="article-comment-link">评论</a></span>
+        
+      </div>
     </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <h4 id="一、问题描述"><a href="#一、问题描述" class="headerlink" title="一、问题描述"></a>一、问题描述</h4><p><strong>问题①：</strong><br>之前开发了一个功能，通过页面初始化gitlab代码脚手架，周一来想新建一个工程时，创建失败。gitlab仓库初始化成功，每次创建了一个文件时就失败了。</p>
+<p><strong>问题②：</strong><br>问题①解决后，线上流水线打包失败，提示net/http包要求go 1.17而我们用的是1.13.</p>
+<h4 id="二、排查过程"><a href="#二、排查过程" class="headerlink" title="二、排查过程"></a>二、排查过程</h4><p><strong>问题①：</strong><br>本地debug，发现每次在gitlab创建文件时，第一个文件会初始化成功，但是第二个就会报400。没有其他的报错信息。考虑到gitlab刚升级了版本，所以自然的怀疑是升级引入的bug。比如新版做了限流等。<br><strong>1、</strong>找到gitlab服务端的容器，gitlab是裸docker单独部署的。进入容器后查看nginx的access、error日志、gitlab自己的production.log api_json.log。<br>production.log中记录了第一次创建成功的记录，state:200。<br>api_json.log中发现了失败的记录。state:400。 和接口一样没有任何有用的提示。<br><strong>2、</strong>查看gitlab的change.log也没发现相关信息。<br>最后本地提交代码时想起来，别的组的同事给gitlab加了个钩子函数，校验commit信息的格式，比如符合”任务号 操作 信息”的格式。怀疑是这里引起的，修改代码的commit信息。<br>run ok。 解决~<br><strong>问题②：</strong><br>问题①解决后，提交代码，流水线打包失败。提示go的net/http包引用了最新的版本，需要升级go的版本。但是本地run和build都没有问题</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;go&#x2F;pkg&#x2F;mod&#x2F;golang.org&#x2F;x&#x2F;net@v0.0.0-20211029224645-99673261e6eb&#x2F;http2&#x2F;transport.go:417:45: undefined: os.ErrDeadlineExceeded</span><br><span class="line">note: module requires Go 1.17</span><br></pre></td></tr></table></figure>
+<p>我只改了一行字符串格式的代码，所以当时以为是流水线出了问题，看了一下打包日志，也没发现问题。让负责流水线的同事排查了。 最后反馈只有我的工程出现问题了。这就很头疼了，接着排查吧。可以发现这个出问题的包是10.29 release的，三天前<br><strong>思考方向：</strong><br>Q1：我引的包没有固定版本号，默认下载的最新的？<br>A1：查看go.mod后发现没有。<br>Q2：我间接引用的包没有固定版本号，导致下载了最新的包？<br>A2：这个就很头疼了，要一个个包排查吗？ 想起使用go mod graph可以查看所有依赖关系，本地执行后发现没问题，这也和上边提到的本地没问题。<br>Q3：github的issue看一下有没有类似的？<br>A3：发现了几个issue和我遇到的问题一样，但是member认为不是bug，已经close了。<br><a target="_blank" rel="noopener" href="https://github.com/golang/go/issues/45950#issuecomment-833054056%E3%80%81">https://github.com/golang/go/issues/45950#issuecomment-833054056、</a><br><a target="_blank" rel="noopener" href="https://github.com/golang/go/issues/45946#issuecomment-832236587">https://github.com/golang/go/issues/45946#issuecomment-832236587</a><br>Q4：怀疑基础镜像被改了，导致的问题？<br>A4：查看基础镜像历史，发现并没改。<br>Q5：再去看看之前成功和失败的打包日志，结果发现了一个之前成功的日志里也会去拉latest的包，我以为就是我间接引用的包出了问题，一顿吐槽。<br>然后再去打包机器上看详细的失败日志，一个可疑的日志出现了。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">go get: upgraded golang.org/x/net v0.0.0-20201110031124-69a78807bb2b =&gt; v0.0.0-20211101193420-4a448f8816b3。</span><br></pre></td></tr></table></figure>
+<p>为什么回去更新包版本呢。难道有go get -u ,去查看dockerfile，发现获取swag的包的时候使用了-u会去更新版本。<br>问题语句：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">RUN go get -u github.com/swaggo/swag/cmd/swag@v1.6.7  </span><br></pre></td></tr></table></figure>
+<p>修改后打包成功。 解决~</p>
+<h4 id="三、心得"><a href="#三、心得" class="headerlink" title="三、心得"></a>三、心得</h4><p>问题①其实别的部门添加这个函数我是知道的，但是没有第一时间想到对自己开发的功能的影响，导致了这个问题。长时间没出问题，导致的松懈。<br>问题②当初dockerfile看了一下没问题，直接从别的工程赋值修改的。没有对每行代码了解清楚，导致了问题。排查方向感觉也有点问题，导致时间浪费。<br>应该先去打包机器看日志，也许解决的就快一些了。</p>
+
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="https://acodetailor.github.io/2021/04/09/problem/" title="记一次超级坑的问题排查" target="_blank" rel="external">https://acodetailor.github.io/2021/04/09/problem/</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://github.com/acodetailor" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/images/avatar.png" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://github.com/acodetailor" target="_blank"><span class="text-dark">Sam</span><small class="ml-1x"></small></a></h3>
+        <div>想上黄金、想成为优秀的程序员。</div>
+      </div>
+    </figure>
   </div>
-</article>
+</div>
+
+
+    </div>
+  </article>
+  
+    
 
   
-  <section id="comments">
-  	
-      <div id="vcomments"></div>
-    
-  </section>
+</div>
 
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    <li class="prev">
+      <a href="/2021/04/12/ops-oom/" title="记一次OOM的问题排查"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
+    </li>
+    
+    
+    <li class="next">
+      <a href="/2021/04/09/golang/" title="k8s clientSet"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+  </ul>
+  
+  
+  <!-- Button trigger modal -->
+  <button type="button" class="btn btn-fancy btn-donate pop-onhover bg-gradient-warning" data-toggle="modal" data-target="#donateModal"><span>赏</span></button>
+  <!-- <div class="wave-icon wave-icon-danger btn-donate" data-toggle="modal" data-target="#donateModal">
+    <div class="wave-circle"><span class="icon"><i class="icon icon-bill"></i></span></div>
+  </div> -->
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter" data-mobile-sites="weibo,qq,qzone"></div>
+    
+  </div>
+  </div>
+</nav>
+  
+<!-- Modal -->
+<div class="modal modal-center modal-small modal-xs-full fade" id="donateModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content donate">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <div class="modal-body">
+        <div class="donate-box">
+          <div class="donate-head">
+            <p>感谢您的支持，我会继续努力的!</p>
+          </div>
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade active in" id="alipay">
+              <div class="donate-payimg">
+                <img src="/images/donate/alipayimg.png" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开支付宝扫一扫，即可进行扫码打赏哦</p>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="wechatpay">
+              <div class="donate-payimg">
+                <img src="/images/donate/wechatpayimg.png" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开微信扫一扫，即可进行扫码打赏哦</p>
+            </div>
+          </div>
+          <div class="donate-footer">
+            <ul class="nav nav-tabs nav-justified" role="tablist">
+              <li role="presentation" class="active">
+                <a href="#alipay" id="alipay-tab" role="tab" data-toggle="tab" aria-controls="alipay" aria-expanded="true"><i class="icon icon-alipay"></i> 支付宝</a>
+              </li>
+              <li role="presentation" class="">
+                <a href="#wechatpay" role="tab" id="wechatpay-tab" data-toggle="tab" aria-controls="wechatpay" aria-expanded="false"><i class="icon icon-wepay"></i> 微信支付</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
 
 
@@ -456,32 +568,9 @@ window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
 
 
 
-
    
-    
-  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/valine"></script>
-  <script type="text/javascript">
-  var GUEST = ['nick', 'mail', 'link'];
-  var meta = 'nick,mail,link';
-  meta = meta.split(',').filter(function(item) {
-    return GUEST.indexOf(item) > -1;
-  });
-  new Valine({
-    el: '#vcomments',
-    verify: false,
-    notify: false,
-    appId: '',
-    appKey: '',
-    placeholder: 'Just go go',
-    avatar: 'mm',
-    meta: meta,
-    pageSize: '10' || 10,
-    visitor: false
-  });
-  </script>
 
-     
+
 
 
 
