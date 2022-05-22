@@ -17,21 +17,25 @@
   <meta http-equiv="window-target" content="_top" />
   
   
-  <title>Serverless之Knative | Lakers</title>
-  <meta name="description" content="一、什么是Knativeknative 是谷歌牵头的 serverless 架构方案，旨在提供一套简单易用的 serverless 开源方案，把 serverless 标准化和平台化。目前参与 knative 项目的公司主要有： Google、Pivotal、IBM、Red Hat和SAP。  这是 Google Cloud Platform 宣布 knative 时给出的介绍：Developed">
+  <title>Mysql常用数据结构 | Lakers</title>
+  <meta name="description" content="一、Mysql常用的数据结构   Q1: int(10)和int(11)有啥区别?  A1: 不会影响存入时的数据范围，显示宽度只是指明 mysql 最大可能显示的数字个数，数值的位数小于指定的宽度时就由空格填充，  如果插入了大于显示宽度的值，只要该值不超过该类型整数的取值范围，数值依然可以插入，而且能够显示出来。     备注：1、varchar是可变长度，使用多大空间和声明的长度没关系，和实">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Serverless之Knative">
-<meta property="og:url" content="https://acodetailor.github.io/2021/05/16/serverless-istio/index.html">
+<meta property="og:title" content="Mysql常用数据结构">
+<meta property="og:url" content="https://acodetailor.github.io/2022/05/22/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/index.html">
 <meta property="og:site_name" content="Sam">
-<meta property="og:description" content="一、什么是Knativeknative 是谷歌牵头的 serverless 架构方案，旨在提供一套简单易用的 serverless 开源方案，把 serverless 标准化和平台化。目前参与 knative 项目的公司主要有： Google、Pivotal、IBM、Red Hat和SAP。  这是 Google Cloud Platform 宣布 knative 时给出的介绍：Developed">
+<meta property="og:description" content="一、Mysql常用的数据结构   Q1: int(10)和int(11)有啥区别?  A1: 不会影响存入时的数据范围，显示宽度只是指明 mysql 最大可能显示的数字个数，数值的位数小于指定的宽度时就由空格填充，  如果插入了大于显示宽度的值，只要该值不超过该类型整数的取值范围，数值依然可以插入，而且能够显示出来。     备注：1、varchar是可变长度，使用多大空间和声明的长度没关系，和实">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2021-05-16T12:59:42.740Z">
-<meta property="article:modified_time" content="2021-05-16T13:48:47.655Z">
+<meta property="og:image" content="https://acodetailor.github.io/image/network/num.png">
+<meta property="og:image" content="https://acodetailor.github.io/image/network/char.png">
+<meta property="og:image" content="https://acodetailor.github.io/image/network/date.png">
+<meta property="article:published_time" content="2022-05-22T12:44:09.575Z">
+<meta property="article:modified_time" content="2022-05-22T13:26:12.570Z">
 <meta property="article:author" content="Sam">
-<meta property="article:tag" content="k8s">
+<meta property="article:tag" content="cache">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://acodetailor.github.io/image/network/num.png">
   <!-- Canonical links -->
-  <link rel="canonical" href="https://acodetailor.github.io/2021/05/16/serverless-istio/index.html">
+  <link rel="canonical" href="https://acodetailor.github.io/2022/05/22/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/index.html">
   
     <link rel="alternate" href="/atom.xml" title="Sam" type="application/atom+xml">
   
@@ -342,14 +346,14 @@
   
 <main class="main" role="main">
   <div class="content">
-  <article id="post-serverless-istio" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+  <article id="post-数据结构" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
     
     <div class="article-header">
       
         
   
     <h1 class="article-title" itemprop="name">
-      Serverless之Knative
+      Mysql常用数据结构
     </h1>
   
 
@@ -357,82 +361,44 @@
       <div class="article-meta">
         <span class="article-date">
     <i class="icon icon-calendar-check"></i>
-	<a href="/2021/05/16/serverless-istio/" class="article-date">
-	  <time datetime="2021-05-16T12:59:42.740Z" itemprop="datePublished">2021-05-16</time>
+	<a href="/2022/05/22/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" class="article-date">
+	  <time datetime="2022-05-22T12:44:09.575Z" itemprop="datePublished">2022-05-22</time>
 	</a>
 </span>
         
   <span class="article-category">
     <i class="icon icon-folder"></i>
-    <a class="article-category-link" href="/categories/k8s/">k8s</a>
+    <a class="article-category-link" href="/categories/DB/">DB</a>
   </span>
 
         
   <span class="article-tag">
     <i class="icon icon-tags"></i>
-	<a class="article-tag-link-link" href="/tags/k8s/" rel="tag">k8s</a>
+	<a class="article-tag-link-link" href="/tags/cache/" rel="tag">cache</a>
   </span>
 
 
         
 
-        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2021/05/16/serverless-istio/#comments" class="article-comment-link">评论</a></span>
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2022/05/22/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/#comments" class="article-comment-link">评论</a></span>
         
       </div>
     </div>
     <div class="article-entry marked-body" itemprop="articleBody">
       
-        <h4 id="一、什么是Knative"><a href="#一、什么是Knative" class="headerlink" title="一、什么是Knative"></a>一、什么是Knative</h4><p>knative 是谷歌牵头的 serverless 架构方案，旨在提供一套简单易用的 serverless 开源方案，把 serverless 标准化和平台化。目前参与 knative 项目的公司主要有： Google、Pivotal、IBM、Red Hat和SAP。</p>
-<ul>
-<li>这是 Google Cloud Platform 宣布 knative 时给出的介绍：<br><em>Developed in close partnership with Pivotal, IBM, Red Hat, and SAP, Knative pushes Kubernetes-based computing forward by providing the building blocks you need to build and deploy modern, container-based serverless applications.</em><br>与Pivotal，IBM，Red Hat和SAP密切合作开发，通过提供构建和部署基于容器的现代serverless应用程序所需的构建块，Knative推动基于Kubernetes的计算。</li>
-<li>在knative的github页面，Knative 给出的官方介绍如下：<br><em>Kubernetes-based platform to build, deploy, and manage modern serverless workloads.</em><br>基于Kubernetes的平台，用于构建，部署和管理现代serverless工作负载。</li>
-</ul>
-<h4 id="二、Knative概述"><a href="#二、Knative概述" class="headerlink" title="二、Knative概述"></a>二、Knative概述</h4><p>Knative扩展了Kubernetes，提供了一组中间件组件，这些组件对于构建可在任何地方运行的现代以源为中心和基于容器的应用程序至关重要：在本地，在云中，甚至在第三方数据中心。</p>
-<p>Knative项目下的每个组件都尝试识别常见模式并编纂最佳实践，这些最佳实践被真实世界中基于Kubernetes的成功框架和应用程序共享。 Knative组件专注于解决许多平凡但困难的任务，例如：</p>
-<ul>
-<li>部署容器</li>
-<li>在Kubernetes上编排source-to-URL的工作流程</li>
-<li>使用蓝绿部署路由和管理流量</li>
-<li>根据需求自动收缩和调整工作负载大小</li>
-<li>将运行服务绑定到事件生态系统</li>
-</ul>
-<p>Knative的开发人员可以使用熟悉的习语，语言和框架来部署任何工作负载：函数，应用程序或容器。  </p>
-<p><strong>组件</strong></p>
-<ul>
-<li>Build - 源到容器的构建编排</li>
-<li>Eventing - 管理和交付事件</li>
-<li>Serving - 请求驱动的计算，可以扩展到零  </li>
-</ul>
-<p><strong>受众</strong></p>
-<ul>
-<li><p>开发人员<br>Knative组件为开发人员提供Kubernetes原生API，用于将serverless风格的函数，应用程序和容器部署到自动伸缩运行时。</p>
-</li>
-<li><p>运维<br>Knative组件旨在集成到更加优雅的产品中，云服务提供商或大型企业的内部团队可以随后运维。</p>
-</li>
-</ul>
-<p>任何企业或云提供商都可以将Knative组件应用到他们自己的系统中，并将这些收益传递给他们的客户。</p>
-<p>Knative是一个多元化，开放和包容的社区。</p>
-<h4 id="三、Knative优势"><a href="#三、Knative优势" class="headerlink" title="三、Knative优势"></a>三、Knative优势</h4><p>和已有的FaaS/serverless实现不同，knative在产品规划和设计理念上有带来新东西：</p>
-<ul>
-<li><p>工作负载类型<br>和标准化的 FaaS 不同，knative 期望能够运行所有的 workload :</p>
-</li>
-<li><p>traditional application</p>
-</li>
-<li><p>function</p>
-</li>
-<li><p>container</p>
-</li>
-<li><p>针对常见应用用例提供更高级别抽象的聚焦API。</p>
-</li>
-<li><p>在几秒钟内即可提供可扩展，安全，无状态的服务。</p>
-</li>
-<li><p>松耦合特性可以按需使用组件</p>
-</li>
-<li><p>可插拔组件，可以自备日志和监控，网络和服务网格。<br>Knative是可移植的：可运行于Kubernetes运行的任何地方，不用担心供应商锁定。<br>knative 建立在 kubernetes 和 istio 之上</p>
-</li>
-</ul>
-<p>使用 kubernetes 提供的容器管理能力（deployment、replicaset、和 pods等），以及 istio 提供的网络管理功能（ingress、LB、dynamic route等）。</p>
-<p>需要特别强调的是：<strong>knative 是 Kubernetes-based！</strong> 或者说 Kubernetes-only，仅仅运行于k8s平台。</p>
+        <h4 id="一、Mysql常用的数据结构"><a href="#一、Mysql常用的数据结构" class="headerlink" title="一、Mysql常用的数据结构"></a>一、Mysql常用的数据结构</h4><p><img src="../../../../image/network/num.png" alt="reason">  </p>
+<h5 id="Q1-int-10-和int-11-有啥区别"><a href="#Q1-int-10-和int-11-有啥区别" class="headerlink" title="Q1: int(10)和int(11)有啥区别?"></a><strong>Q1</strong>: int(10)和int(11)有啥区别?</h5><p>  <strong>A1</strong>: 不会影响存入时的数据范围，显示宽度只是指明 mysql 最大可能显示的数字个数，数值的位数小于指定的宽度时就由空格填充，<br>  如果插入了大于显示宽度的值，只要该值不超过该类型整数的取值范围，数值依然可以插入，而且能够显示出来。 </p>
+<p><img src="../../../../image/network/char.png" alt="reason">  </p>
+<h5 id="备注："><a href="#备注：" class="headerlink" title="备注："></a>备注：</h5><p>1、varchar是可变长度，使用多大空间和声明的长度没关系，和实际传入的数据长度有关。<br>2、现在使用的5.X版本，varchar长度指定的是字符，超过会自动转为text</p>
+<p><img src="../../../../image/network/date.png" alt="reason">    </p>
+<h4 id="二、复习基础知识"><a href="#二、复习基础知识" class="headerlink" title="二、复习基础知识"></a>二、复习基础知识</h4><p>位（比特位）：bit（binary digit）（简写：b），是计算机数据存储最小的单位，二进制中，0或者1就是一个位（比特位）bit。</p>
+<p>字节：Byte（简写：B），是计算机信息技术用于计量存储容量的一种计量单位，通常情况下一字节等于八位，也就是 →  1Byte = 8bit </p>
+<p>字符：Character，在计算机和电信技术中，一个字符是一个单位的字形、类字形单位或符号的基本信息。</p>
+<p>字符与字节：</p>
+<p>ASCII码：一个英文字母（不区分大小写）占一个字节的空间。如一个ASCII码就是一个字节。</p>
+<p>UTF-8编码：一个英文字符等于一个字节，一个中文等于三个字节。中文标点占三个字节，英文标点占一个字节。</p>
+<p>Unicode编码：一个英文等于两个字节，一个中文等于两个字节。中文标点占两个字节，英文标点占两个字节。</p>
+<p>gbk 编码下：一个英文占用一个字节，一个汉字占用 2 个 字节。</p>
 
       
     </div>
@@ -442,7 +408,7 @@
     
     <li class="post-copyright-link hidden-xs">
       <strong>本文链接：</strong>
-      <a href="https://acodetailor.github.io/2021/05/16/serverless-istio/" title="Serverless之Knative" target="_blank" rel="external">https://acodetailor.github.io/2021/05/16/serverless-istio/</a>
+      <a href="https://acodetailor.github.io/2022/05/22/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" title="Mysql常用数据结构" target="_blank" rel="external">https://acodetailor.github.io/2022/05/22/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/</a>
     </li>
     
     <li class="post-copyright-license">
@@ -482,13 +448,9 @@
   
   <ul class="pager pull-left">
     
-    <li class="prev">
-      <a href="/2021/09/13/camel/" title="Camelk"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
-    </li>
-    
     
     <li class="next">
-      <a href="/2021/04/30/knative/" title="Serverless之Knative流量转发"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+      <a href="/2022/05/22/cache_consistent/" title="缓存一致性策略"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
     </li>
     
     
