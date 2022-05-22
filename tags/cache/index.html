@@ -17,23 +17,18 @@
   <meta http-equiv="window-target" content="_top" />
   
   
-  <title>Knative | Lakers</title>
-  <meta name="description" content="一、Knative是什么Knative分为三个部分，Serving、Eventing、Building。Serving：主要使用Knative Service部署应用，具有弹性伸缩等功能。Eventing：事件驱动，通过其他内置的资源，实现事件的异步流转。Building：镜像构建。   二、Serving架构   如上图所示，当我们手动创建一个Knative的Service资源时，Knative">
-<meta property="og:type" content="article">
-<meta property="og:title" content="Knative">
-<meta property="og:url" content="https://acodetailor.github.io/2021/09/22/knative%E6%BA%90%E7%A0%81%E4%B8%80/index.html">
+  <title>标签: cache | Lakers</title>
+  <meta name="description" content="杂记">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Sam">
+<meta property="og:url" content="https://acodetailor.github.io/tags/cache/index.html">
 <meta property="og:site_name" content="Sam">
-<meta property="og:description" content="一、Knative是什么Knative分为三个部分，Serving、Eventing、Building。Serving：主要使用Knative Service部署应用，具有弹性伸缩等功能。Eventing：事件驱动，通过其他内置的资源，实现事件的异步流转。Building：镜像构建。   二、Serving架构   如上图所示，当我们手动创建一个Knative的Service资源时，Knative">
+<meta property="og:description" content="杂记">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://acodetailor.github.io/image/serverless/serving-crd.jpg">
-<meta property="article:published_time" content="2021-09-22T03:25:42.493Z">
-<meta property="article:modified_time" content="2021-09-25T15:05:42.758Z">
 <meta property="article:author" content="Sam">
-<meta property="article:tag" content="knative">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://acodetailor.github.io/image/serverless/serving-crd.jpg">
   <!-- Canonical links -->
-  <link rel="canonical" href="https://acodetailor.github.io/2021/09/22/knative%E6%BA%90%E7%A0%81%E4%B8%80/index.html">
+  <link rel="canonical" href="https://acodetailor.github.io/tags/cache/index.html">
   
     <link rel="alternate" href="/atom.xml" title="Sam" type="application/atom+xml">
   
@@ -341,173 +336,64 @@
 </aside>
 
   
-  
-<main class="main" role="main">
-  <div class="content">
-  <article id="post-knative源码一" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+  <main class="main" role="main">
+  <article class="content article article-tags post-type-list" itemscope="">
+    <header class="article-header">
+      <h1 itemprop="name" class="hidden-xs">标签: cache</h1>
+      <p class="text-muted hidden-xs">共 1 篇文章</p>
+      <nav role="navigation" id="nav-main" class="okayNav">
+        <ul>
+          <li><a href="/tags">All</a></li>
+          
+          <li><a href="/tags/terraform/">terraform</a></li>
+          
+          <li><a href="/tags/k8s/">k8s</a></li>
+          
+          <li><a href="/tags/oom/">oom</a></li>
+          
+          <li><a href="/tags/knative/">knative</a></li>
+          
+          <li><a href="/tags/problem/">problem</a></li>
+          
+          <li><a href="/tags/Linux/">Linux</a></li>
+          
+          <li><a href="/tags/cache/">cache</a></li>
+          
+        </ul>
+      </nav>
+    </header>
+    <!-- /header -->
+    <div class="article-body">
+      <div class="row">
+        
+<div class="col-md-6">
     
-    <div class="article-header">
-      
-        
-  
-    <h1 class="article-title" itemprop="name">
-      Knative
-    </h1>
-  
-
-      
-      <div class="article-meta">
-        <span class="article-date">
-    <i class="icon icon-calendar-check"></i>
-	<a href="/2021/09/22/knative%E6%BA%90%E7%A0%81%E4%B8%80/" class="article-date">
-	  <time datetime="2021-09-22T03:25:42.493Z" itemprop="datePublished">2021-09-22</time>
-	</a>
-</span>
-        
-  <span class="article-category">
-    <i class="icon icon-folder"></i>
-    <a class="article-category-link" href="/categories/k8s/">k8s</a>
-  </span>
-
-        
-  <span class="article-tag">
-    <i class="icon icon-tags"></i>
-	<a class="article-tag-link-link" href="/tags/knative/" rel="tag">knative</a>
-  </span>
-
-
-        
-
-        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2021/09/22/knative%E6%BA%90%E7%A0%81%E4%B8%80/#comments" class="article-comment-link">评论</a></span>
-        
-      </div>
-    </div>
-    <div class="article-entry marked-body" itemprop="articleBody">
-      
-        <h4 id="一、Knative是什么"><a href="#一、Knative是什么" class="headerlink" title="一、Knative是什么"></a>一、Knative是什么</h4><p>Knative分为三个部分，Serving、Eventing、Building。<br>Serving：主要使用Knative Service部署应用，具有弹性伸缩等功能。<br>Eventing：事件驱动，通过其他内置的资源，实现事件的异步流转。<br>Building：镜像构建。  </p>
-<h4 id="二、Serving架构"><a href="#二、Serving架构" class="headerlink" title="二、Serving架构"></a>二、Serving架构</h4><p><img src="../../../../image/serverless/serving-crd.jpg" alt="reason">  </p>
-<p>如上图所示，当我们手动创建一个Knative的Service资源时，Knative的controller会自动给我们创建如图所示<br>的资源，实现Serving组件的相关功能。 后续详细分析各个controller代码。</p>
-
-      
-    </div>
-    <div class="article-footer">
-      <blockquote class="mt-2x">
-  <ul class="post-copyright list-unstyled">
-    
-    <li class="post-copyright-link hidden-xs">
-      <strong>本文链接：</strong>
-      <a href="https://acodetailor.github.io/2021/09/22/knative%E6%BA%90%E7%A0%81%E4%B8%80/" title="Knative" target="_blank" rel="external">https://acodetailor.github.io/2021/09/22/knative%E6%BA%90%E7%A0%81%E4%B8%80/</a>
-    </li>
-    
-    <li class="post-copyright-license">
-      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
-    </li>
-  </ul>
-</blockquote>
-
-
-<div class="panel panel-default panel-badger">
+<article class="panel panel-default hover-shadow hover-grow" itemscope itemtype="http://schema.org/BlogPosting">
   <div class="panel-body">
-    <figure class="media">
-      <div class="media-left">
-        <a href="https://github.com/acodetailor" target="_blank" class="img-burn thumb-sm visible-lg">
-          <img src="/images/avatar.png" class="img-rounded w-full" alt="">
-        </a>
-      </div>
-      <div class="media-body">
-        <h3 class="media-heading"><a href="https://github.com/acodetailor" target="_blank"><span class="text-dark">Sam</span><small class="ml-1x"></small></a></h3>
-        <div>想上黄金、想成为优秀的程序员。</div>
-      </div>
-    </figure>
-  </div>
+     <div class="article-meta">
+       <time datetime="2022-05-22T07:32:35.712Z" itemprop="datePublished">2022-05-22</time>
+     </div>
+     <h3 class="article-title" itemprop="name">
+       <a class="article-link" href="/2022/05/22/cache_consistent/">缓存一致性策略</a>
+     </h3>
+   </div>
+   
+   <div class="panel-footer">
+     
+      <a href="/tags/cache/" class="label label-default mb">cache</a>
+     
+     
+   </div>
+   
+</article>
+
+
 </div>
 
-
+      </div>
     </div>
   </article>
-  
-    
-
-  
-</div>
-
-  <nav class="bar bar-footer clearfix" data-stick-bottom>
-  <div class="bar-inner">
-  
-  <ul class="pager pull-left">
-    
-    <li class="prev">
-      <a href="/2022/05/10/tcp/" title="你真的了解TCP吗"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
-    </li>
-    
-    
-    <li class="next">
-      <a href="/2021/09/13/camel/" title="Camelk"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
-    </li>
-    
-    
-  </ul>
-  
-  
-  <!-- Button trigger modal -->
-  <button type="button" class="btn btn-fancy btn-donate pop-onhover bg-gradient-warning" data-toggle="modal" data-target="#donateModal"><span>赏</span></button>
-  <!-- <div class="wave-icon wave-icon-danger btn-donate" data-toggle="modal" data-target="#donateModal">
-    <div class="wave-circle"><span class="icon"><i class="icon icon-bill"></i></span></div>
-  </div> -->
-  
-  
-  <div class="bar-right">
-    
-    <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter" data-mobile-sites="weibo,qq,qzone"></div>
-    
-  </div>
-  </div>
-</nav>
-  
-<!-- Modal -->
-<div class="modal modal-center modal-small modal-xs-full fade" id="donateModal" tabindex="-1" role="dialog">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content donate">
-      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-      <div class="modal-body">
-        <div class="donate-box">
-          <div class="donate-head">
-            <p>感谢您的支持，我会继续努力的!</p>
-          </div>
-          <div class="tab-content">
-            <div role="tabpanel" class="tab-pane fade active in" id="alipay">
-              <div class="donate-payimg">
-                <img src="/images/donate/alipayimg.png" alt="扫码支持" title="扫一扫" />
-              </div>
-              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
-              <p class="text-grey">打开支付宝扫一扫，即可进行扫码打赏哦</p>
-            </div>
-            <div role="tabpanel" class="tab-pane fade" id="wechatpay">
-              <div class="donate-payimg">
-                <img src="/images/donate/wechatpayimg.png" alt="扫码支持" title="扫一扫" />
-              </div>
-              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
-              <p class="text-grey">打开微信扫一扫，即可进行扫码打赏哦</p>
-            </div>
-          </div>
-          <div class="donate-footer">
-            <ul class="nav nav-tabs nav-justified" role="tablist">
-              <li role="presentation" class="active">
-                <a href="#alipay" id="alipay-tab" role="tab" data-toggle="tab" aria-controls="alipay" aria-expanded="true"><i class="icon icon-alipay"></i> 支付宝</a>
-              </li>
-              <li role="presentation" class="">
-                <a href="#wechatpay" role="tab" id="wechatpay-tab" data-toggle="tab" aria-controls="wechatpay" aria-expanded="false"><i class="icon icon-wepay"></i> 微信支付</a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-
+   
 </main>
 
   <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
@@ -560,10 +446,6 @@ window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
 
 
 
-
-
-
-   
 
 
 

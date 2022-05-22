@@ -17,23 +17,21 @@
   <meta http-equiv="window-target" content="_top" />
   
   
-  <title>Knative | Lakers</title>
-  <meta name="description" content="一、Knative是什么Knative分为三个部分，Serving、Eventing、Building。Serving：主要使用Knative Service部署应用，具有弹性伸缩等功能。Eventing：事件驱动，通过其他内置的资源，实现事件的异步流转。Building：镜像构建。   二、Serving架构   如上图所示，当我们手动创建一个Knative的Service资源时，Knative">
+  <title>缓存一致性策略 | Lakers</title>
+  <meta name="description" content="一、问题在当前互联网系统中，为了提高响应速度，使用缓存是大家最常用的手段。但是使用缓存后必然带来了缓存和数据库的一致性问题，下边从读和改两个方面，就几种选择分析一下存在的问题。 二、Cache-Aside策略2.1 读读的话比较简单，一般都是先读取缓存，如果缓存没有命中，则查询数据库，然后将数据添加到缓存，返回数据 2.2 改方案①先改缓存，再改数据库并发修改数据时，A先修改了缓存，B修改了缓存、">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Knative">
-<meta property="og:url" content="https://acodetailor.github.io/2021/09/22/knative%E6%BA%90%E7%A0%81%E4%B8%80/index.html">
+<meta property="og:title" content="缓存一致性策略">
+<meta property="og:url" content="https://acodetailor.github.io/2022/05/22/cache_consistent/index.html">
 <meta property="og:site_name" content="Sam">
-<meta property="og:description" content="一、Knative是什么Knative分为三个部分，Serving、Eventing、Building。Serving：主要使用Knative Service部署应用，具有弹性伸缩等功能。Eventing：事件驱动，通过其他内置的资源，实现事件的异步流转。Building：镜像构建。   二、Serving架构   如上图所示，当我们手动创建一个Knative的Service资源时，Knative">
+<meta property="og:description" content="一、问题在当前互联网系统中，为了提高响应速度，使用缓存是大家最常用的手段。但是使用缓存后必然带来了缓存和数据库的一致性问题，下边从读和改两个方面，就几种选择分析一下存在的问题。 二、Cache-Aside策略2.1 读读的话比较简单，一般都是先读取缓存，如果缓存没有命中，则查询数据库，然后将数据添加到缓存，返回数据 2.2 改方案①先改缓存，再改数据库并发修改数据时，A先修改了缓存，B修改了缓存、">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://acodetailor.github.io/image/serverless/serving-crd.jpg">
-<meta property="article:published_time" content="2021-09-22T03:25:42.493Z">
-<meta property="article:modified_time" content="2021-09-25T15:05:42.758Z">
+<meta property="article:published_time" content="2022-05-22T07:32:35.712Z">
+<meta property="article:modified_time" content="2022-05-22T08:46:58.604Z">
 <meta property="article:author" content="Sam">
-<meta property="article:tag" content="knative">
+<meta property="article:tag" content="cache">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://acodetailor.github.io/image/serverless/serving-crd.jpg">
   <!-- Canonical links -->
-  <link rel="canonical" href="https://acodetailor.github.io/2021/09/22/knative%E6%BA%90%E7%A0%81%E4%B8%80/index.html">
+  <link rel="canonical" href="https://acodetailor.github.io/2022/05/22/cache_consistent/index.html">
   
     <link rel="alternate" href="/atom.xml" title="Sam" type="application/atom+xml">
   
@@ -344,14 +342,14 @@
   
 <main class="main" role="main">
   <div class="content">
-  <article id="post-knative源码一" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+  <article id="post-cache_consistent" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
     
     <div class="article-header">
       
         
   
     <h1 class="article-title" itemprop="name">
-      Knative
+      缓存一致性策略
     </h1>
   
 
@@ -359,34 +357,41 @@
       <div class="article-meta">
         <span class="article-date">
     <i class="icon icon-calendar-check"></i>
-	<a href="/2021/09/22/knative%E6%BA%90%E7%A0%81%E4%B8%80/" class="article-date">
-	  <time datetime="2021-09-22T03:25:42.493Z" itemprop="datePublished">2021-09-22</time>
+	<a href="/2022/05/22/cache_consistent/" class="article-date">
+	  <time datetime="2022-05-22T07:32:35.712Z" itemprop="datePublished">2022-05-22</time>
 	</a>
 </span>
         
   <span class="article-category">
     <i class="icon icon-folder"></i>
-    <a class="article-category-link" href="/categories/k8s/">k8s</a>
+    <a class="article-category-link" href="/categories/DB/">DB</a>
   </span>
 
         
   <span class="article-tag">
     <i class="icon icon-tags"></i>
-	<a class="article-tag-link-link" href="/tags/knative/" rel="tag">knative</a>
+	<a class="article-tag-link-link" href="/tags/cache/" rel="tag">cache</a>
   </span>
 
 
         
 
-        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2021/09/22/knative%E6%BA%90%E7%A0%81%E4%B8%80/#comments" class="article-comment-link">评论</a></span>
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2022/05/22/cache_consistent/#comments" class="article-comment-link">评论</a></span>
         
       </div>
     </div>
     <div class="article-entry marked-body" itemprop="articleBody">
       
-        <h4 id="一、Knative是什么"><a href="#一、Knative是什么" class="headerlink" title="一、Knative是什么"></a>一、Knative是什么</h4><p>Knative分为三个部分，Serving、Eventing、Building。<br>Serving：主要使用Knative Service部署应用，具有弹性伸缩等功能。<br>Eventing：事件驱动，通过其他内置的资源，实现事件的异步流转。<br>Building：镜像构建。  </p>
-<h4 id="二、Serving架构"><a href="#二、Serving架构" class="headerlink" title="二、Serving架构"></a>二、Serving架构</h4><p><img src="../../../../image/serverless/serving-crd.jpg" alt="reason">  </p>
-<p>如上图所示，当我们手动创建一个Knative的Service资源时，Knative的controller会自动给我们创建如图所示<br>的资源，实现Serving组件的相关功能。 后续详细分析各个controller代码。</p>
+        <h4 id="一、问题"><a href="#一、问题" class="headerlink" title="一、问题"></a>一、问题</h4><p>在当前互联网系统中，为了提高响应速度，使用缓存是大家最常用的手段。但是使用缓存后必然带来了缓存和数据库的一致性问题，<br>下边从读和改两个方面，就几种选择分析一下存在的问题。</p>
+<h4 id="二、Cache-Aside策略"><a href="#二、Cache-Aside策略" class="headerlink" title="二、Cache-Aside策略"></a>二、Cache-Aside策略</h4><h4 id="2-1-读"><a href="#2-1-读" class="headerlink" title="2.1 读"></a>2.1 读</h4><p>读的话比较简单，一般都是先读取缓存，如果缓存没有命中，则查询数据库，然后将数据添加到缓存，返回数据</p>
+<h4 id="2-2-改"><a href="#2-2-改" class="headerlink" title="2.2 改"></a>2.2 改</h4><p><strong>方案①</strong>先改缓存，再改数据库<br>并发修改数据时，A先修改了缓存，B修改了缓存、修改了数据库、A修改数据库，造成数据不一致。   </p>
+<p><strong>方案②</strong>先改数据库，再改缓存<br>并发时也存在上述问题。  </p>
+<p><strong>方案③</strong>先删缓存，再改数据库<br>并发时A读，B改，B删除-&gt; A 读取（更新了缓存）-&gt; B改数据库，造成不一致。读操作正常会比改快一些，高并发下还是容易出现问题。  </p>
+<p><strong>方案④</strong>先改数据库，再删缓存<br>并发时，A读，B改。 A读 -&gt; B改  -&gt; B删 -&gt; A(更新)。造成不一致。 极端条件下确实存在该问题，但是读正常会比改从操作快，满足改问题出现<br>的条件还是比较苛刻，所以一般选择该方案。<br>假设删除缓存失败了呢，暂时不考虑事务场景。可以使用消息队列进行补偿，删除失败后将key添加到消息队列里。  </p>
+<h4 id="三、Read-Through和Write-Through"><a href="#三、Read-Through和Write-Through" class="headerlink" title="三、Read Through和Write Through"></a>三、Read Through和Write Through</h4><p>这种方案将缓存作为主要数据存储，缓存数据不存在过期时间。  </p>
+<p>Read-Through，应用查询缓存是否存在，存在则返回；不存在则由缓存组件去数据库加载数据。<br>Write-Through，先查询要写入的数据在缓存是否存在，存在则先更新缓存然后再更新数据库最后返回。  </p>
+<p>适合读多写少的场景，比较缓存中存了所有数据。</p>
+<h4 id="四、Write-Back"><a href="#四、Write-Back" class="headerlink" title="四、Write Back"></a>四、Write Back</h4><p>Write Back和上述的方案区别在于缓存和数据库的同步通过异步方案来处理。</p>
 
       
     </div>
@@ -396,7 +401,7 @@
     
     <li class="post-copyright-link hidden-xs">
       <strong>本文链接：</strong>
-      <a href="https://acodetailor.github.io/2021/09/22/knative%E6%BA%90%E7%A0%81%E4%B8%80/" title="Knative" target="_blank" rel="external">https://acodetailor.github.io/2021/09/22/knative%E6%BA%90%E7%A0%81%E4%B8%80/</a>
+      <a href="https://acodetailor.github.io/2022/05/22/cache_consistent/" title="缓存一致性策略" target="_blank" rel="external">https://acodetailor.github.io/2022/05/22/cache_consistent/</a>
     </li>
     
     <li class="post-copyright-license">
@@ -436,13 +441,9 @@
   
   <ul class="pager pull-left">
     
-    <li class="prev">
-      <a href="/2022/05/10/tcp/" title="你真的了解TCP吗"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
-    </li>
-    
     
     <li class="next">
-      <a href="/2021/09/13/camel/" title="Camelk"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+      <a href="/2022/05/10/tcp/" title="你真的了解TCP吗"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
     </li>
     
     

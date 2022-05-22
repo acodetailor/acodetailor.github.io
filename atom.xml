@@ -6,7 +6,7 @@
   <link href="https://acodetailor.github.io/atom.xml" rel="self"/>
   
   <link href="https://acodetailor.github.io/"/>
-  <updated>2022-05-15T13:02:51.416Z</updated>
+  <updated>2022-05-22T08:46:58.604Z</updated>
   <id>https://acodetailor.github.io/</id>
   
   <author>
@@ -15,6 +15,30 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>缓存一致性策略</title>
+    <link href="https://acodetailor.github.io/2022/05/22/cache_consistent/"/>
+    <id>https://acodetailor.github.io/2022/05/22/cache_consistent/</id>
+    <published>2022-05-22T07:32:35.712Z</published>
+    <updated>2022-05-22T08:46:58.604Z</updated>
+    
+    <content type="html"><![CDATA[<h4 id="一、问题"><a href="#一、问题" class="headerlink" title="一、问题"></a>一、问题</h4><p>在当前互联网系统中，为了提高响应速度，使用缓存是大家最常用的手段。但是使用缓存后必然带来了缓存和数据库的一致性问题，<br>下边从读和改两个方面，就几种选择分析一下存在的问题。</p><h4 id="二、Cache-Aside策略"><a href="#二、Cache-Aside策略" class="headerlink" title="二、Cache-Aside策略"></a>二、Cache-Aside策略</h4><h4 id="2-1-读"><a href="#2-1-读" class="headerlink" title="2.1 读"></a>2.1 读</h4><p>读的话比较简单，一般都是先读取缓存，如果缓存没有命中，则查询数据库，然后将数据添加到缓存，返回数据</p><h4 id="2-2-改"><a href="#2-2-改" class="headerlink" title="2.2 改"></a>2.2 改</h4><p><strong>方案①</strong>先改缓存，再改数据库<br>并发修改数据时，A先修改了缓存，B修改了缓存、修改了数据库、A修改数据库，造成数据不一致。   </p><p><strong>方案②</strong>先改数据库，再改缓存<br>并发时也存在上述问题。  </p><p><strong>方案③</strong>先删缓存，再改数据库<br>并发时A读，B改，B删除-&gt; A 读取（更新了缓存）-&gt; B改数据库，造成不一致。读操作正常会比改快一些，高并发下还是容易出现问题。  </p><p><strong>方案④</strong>先改数据库，再删缓存<br>并发时，A读，B改。 A读 -&gt; B改  -&gt; B删 -&gt; A(更新)。造成不一致。 极端条件下确实存在该问题，但是读正常会比改从操作快，满足改问题出现<br>的条件还是比较苛刻，所以一般选择该方案。<br>假设删除缓存失败了呢，暂时不考虑事务场景。可以使用消息队列进行补偿，删除失败后将key添加到消息队列里。  </p><h4 id="三、Read-Through和Write-Through"><a href="#三、Read-Through和Write-Through" class="headerlink" title="三、Read Through和Write Through"></a>三、Read Through和Write Through</h4><p>这种方案将缓存作为主要数据存储，缓存数据不存在过期时间。  </p><p>Read-Through，应用查询缓存是否存在，存在则返回；不存在则由缓存组件去数据库加载数据。<br>Write-Through，先查询要写入的数据在缓存是否存在，存在则先更新缓存然后再更新数据库最后返回。  </p><p>适合读多写少的场景，比较缓存中存了所有数据。</p><h4 id="四、Write-Back"><a href="#四、Write-Back" class="headerlink" title="四、Write Back"></a>四、Write Back</h4><p>Write Back和上述的方案区别在于缓存和数据库的同步通过异步方案来处理。</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h4 id=&quot;一、问题&quot;&gt;&lt;a href=&quot;#一、问题&quot; class=&quot;headerlink&quot; title=&quot;一、问题&quot;&gt;&lt;/a&gt;一、问题&lt;/h4&gt;&lt;p&gt;在当前互联网系统中，为了提高响应速度，使用缓存是大家最常用的手段。但是使用缓存后必然带来了缓存和数据库的一致性问题，&lt;br&gt;</summary>
+      
+    
+    
+    
+    <category term="DB" scheme="https://acodetailor.github.io/categories/DB/"/>
+    
+    
+    <category term="cache" scheme="https://acodetailor.github.io/tags/cache/"/>
+    
+  </entry>
   
   <entry>
     <title>你真的了解TCP吗</title>
