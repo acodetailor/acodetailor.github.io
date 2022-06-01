@@ -6,7 +6,7 @@
   <link href="https://acodetailor.github.io/atom.xml" rel="self"/>
   
   <link href="https://acodetailor.github.io/"/>
-  <updated>2022-05-29T07:32:19.551Z</updated>
+  <updated>2022-06-01T08:58:17.824Z</updated>
   <id>https://acodetailor.github.io/</id>
   
   <author>
@@ -15,6 +15,30 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>consul nodeId conflict导致所有agent都无法加入</title>
+    <link href="https://acodetailor.github.io/2022/06/01/consul_prolem/"/>
+    <id>https://acodetailor.github.io/2022/06/01/consul_prolem/</id>
+    <published>2022-06-01T08:39:43.013Z</published>
+    <updated>2022-06-01T08:58:17.824Z</updated>
+    
+    <content type="html"><![CDATA[<h4 id="一、现象"><a href="#一、现象" class="headerlink" title="一、现象"></a>一、现象</h4><p>周一刚上班，开发环境出问题了，大家反馈的本地的consul client无法加入到server集群了。由于我最近搞过这方面，让帮忙看看。<br>报错日志（网上找的）：</p><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Failed to join xx.xxx.xxx.xxx: Member <span class="string">&#x27;A&#x27;</span> has conflicting node ID <span class="string">&#x27;fd002068-1f26-7e90-ba80-b9e999d874a1&#x27;</span> with B.</span><br></pre></td></tr></table></figure><p>这一看很明显啊，有2位同事的nodeID冲突了，改一下就解决了。结果一个同事请假了，另一个更神奇了，好像不是我们项目组的。由于项目组内<br>注册时都使用拼音缩写（后来想想使用工号貌似更好一点），看了一圈确定不是本项目的。联系相关同事，通过ip反查肇事者，让他改了本地的配置。</p><h4 id="二、解决"><a href="#二、解决" class="headerlink" title="二、解决"></a>二、解决</h4><p>问题原因：<br>1、这位肇事者使用了别人给的配置，没有修改server导致直接注册到我们的consul了。<br>2、由于是开发环境，管控不严，实际应该开启ACL策略，只有分配token了才能注册。<br>3、nodeId正常是根据client端的bios硬件id转化来的，里面是通过读取/sys/class/dmi/id/product_uuid得到一个id，由于我们使用的<br>云服务器，可能导致重复吧<br>4、可以在client加入集群时指定nodeId,避免重复。</p><h4 id="三、走进科学"><a href="#三、走进科学" class="headerlink" title="三、走进科学"></a>三、走进科学</h4><p>事情解决了之后就在考虑，为啥别人的nodeId冲突了会导致无关的人也无法加入consul server集群呢？是feature?<br>但是感觉还是说不通，果然之前有人碰到过，给consul提过issue了。看了一下好像从1.5.x 到1.7.x都有人碰到。<br>上链接：<a href="https://github.com/hashicorp/consul/issues/7396#issuecomment-1141855713">https://github.com/hashicorp/consul/issues/7396#issuecomment-1141855713</a></p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h4 id=&quot;一、现象&quot;&gt;&lt;a href=&quot;#一、现象&quot; class=&quot;headerlink&quot; title=&quot;一、现象&quot;&gt;&lt;/a&gt;一、现象&lt;/h4&gt;&lt;p&gt;周一刚上班，开发环境出问题了，大家反馈的本地的consul client无法加入到server集群了。由于我最近搞过这方面，</summary>
+      
+    
+    
+    
+    <category term="consul" scheme="https://acodetailor.github.io/categories/consul/"/>
+    
+    
+    <category term="consul" scheme="https://acodetailor.github.io/tags/consul/"/>
+    
+  </entry>
   
   <entry>
     <title>Feign了解一下</title>
