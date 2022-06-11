@@ -17,18 +17,23 @@
   <meta http-equiv="window-target" content="_top" />
   
   
-  <title>Lakers</title>
-  <meta name="description" content="杂记">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Sam">
-<meta property="og:url" content="https://acodetailor.github.io/page/2/index.html">
+  <title>byte[i] &amp; 0xff是干啥？ | Lakers</title>
+  <meta name="description" content="一、背景1src[i] &amp; 0xFF 上述代码片段对于一个javaer来说应该不陌生。最近需求里需要通过文件流的前缀来判断上传文件的类型。看到了这段代码，没理解是这块代码的作用。   二、知识回顾0、二进制中一个字节(byte)是存储信息的最小单位，大小为8bits，即8个位，每个0或1就是一个位(bit)，规定数据的最高位是符号位。符号位是1表示负数，是0表示正数。正数存储二进制原码，负">
+<meta property="og:type" content="article">
+<meta property="og:title" content="byte[i] &amp; 0xff是干啥？">
+<meta property="og:url" content="https://acodetailor.github.io/2022/06/11/byte&0xff/index.html">
 <meta property="og:site_name" content="Sam">
-<meta property="og:description" content="杂记">
+<meta property="og:description" content="一、背景1src[i] &amp; 0xFF 上述代码片段对于一个javaer来说应该不陌生。最近需求里需要通过文件流的前缀来判断上传文件的类型。看到了这段代码，没理解是这块代码的作用。   二、知识回顾0、二进制中一个字节(byte)是存储信息的最小单位，大小为8bits，即8个位，每个0或1就是一个位(bit)，规定数据的最高位是符号位。符号位是1表示负数，是0表示正数。正数存储二进制原码，负">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://acodetailor.github.io/image/network/byte.png">
+<meta property="article:published_time" content="2022-06-11T13:28:41.623Z">
+<meta property="article:modified_time" content="2022-06-11T14:59:51.941Z">
 <meta property="article:author" content="Sam">
+<meta property="article:tag" content="java">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://acodetailor.github.io/image/network/byte.png">
   <!-- Canonical links -->
-  <link rel="canonical" href="https://acodetailor.github.io/page/2/index.html">
+  <link rel="canonical" href="https://acodetailor.github.io/2022/06/11/byte&0xff/index.html">
   
     <link rel="alternate" href="/atom.xml" title="Sam" type="application/atom+xml">
   
@@ -336,372 +341,172 @@
 </aside>
 
   
-  <main class="main" role="main">
   
-  <div class="content article-list">
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-byte&amp;0xff" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
     
-      <article class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
-  <div class="article-header">
-    
+    <div class="article-header">
+      
+        
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/04/28/serverless/">Serverless之介绍</a>
+    <h1 class="article-title" itemprop="name">
+      byte[i] &amp; 0xff是干啥？
     </h1>
   
 
-  </div>
-  
-  <p class="article-meta">
-    <span class="article-date">
+      
+      <div class="article-meta">
+        <span class="article-date">
     <i class="icon icon-calendar-check"></i>
-	<a href="/2021/04/28/serverless/" class="article-date">
-	  <time datetime="2021-04-28T06:35:10.932Z" itemprop="datePublished">4月 28</time>
+	<a href="/2022/06/11/byte&0xff/" class="article-date">
+	  <time datetime="2022-06-11T13:28:41.623Z" itemprop="datePublished">2022-06-11</time>
 	</a>
 </span>
-    
+        
   <span class="article-category">
     <i class="icon icon-folder"></i>
-    <a class="article-category-link" href="/categories/k8s/">k8s</a>
+    <a class="article-category-link" href="/categories/java/">java</a>
   </span>
 
-    
+        
   <span class="article-tag">
     <i class="icon icon-tags"></i>
-	<a class="article-tag-link-link" href="/tags/k8s/" rel="tag">k8s</a>
+	<a class="article-tag-link-link" href="/tags/java/" rel="tag">java</a>
   </span>
 
 
-    <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2021/04/28/serverless/#comments" class="article-comment-link">评论</a></span>
-    
-  </p>
-</article>
+        
 
-    
-      <article class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
-  <div class="article-header">
-    
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/04/24/java_oom/">java的OOM问题</a>
-    </h1>
-  
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2022/06/11/byte&0xff/#comments" class="article-comment-link">评论</a></span>
+        
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <h4 id="一、背景"><a href="#一、背景" class="headerlink" title="一、背景"></a>一、背景</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">src[i] &amp; 0xFF</span><br></pre></td></tr></table></figure>
+<p>上述代码片段对于一个javaer来说应该不陌生。最近需求里需要通过文件流的前缀来判断上传文件的类型。看到了这段代码，没理解是这块代码的作用。  </p>
+<h4 id="二、知识回顾"><a href="#二、知识回顾" class="headerlink" title="二、知识回顾"></a>二、知识回顾</h4><p>0、二进制中一个字节(byte)是存储信息的最小单位，大小为8bits，即8个位，每个0或1就是一个位(bit)，规定数据的最高位是符号位。符号位是1表示负数，是0表示正数。<br>正数存储二进制原码，负数存储的是二进制的补码，补码是负数的绝对值反码加1。<br>1、java中int是4个字节，32位。<br>2、对于有符号数，如-1，按补码存储。 -1 的绝对值，取反再加一。即1的二进制 0000 0001，取反 1111 1110，再加一。1111 1111。</p>
+<h4 id="三、进行与操作"><a href="#三、进行与操作" class="headerlink" title="三、进行与操作"></a>三、进行与操作</h4><p>java中采用的是补码的形式，如上述提到的-1，java中存的是1111 1111，，如果直接转十六进制，则int补齐高位的24位，变为<br>1111 1111 1111 1111 1111 1111 1111 1111，转为16进制为ffffffff。与实际的ff就有了偏差。</p>
+<p>0xff的二进制为 1111 1111，进行与操作，将高位清零，结果ok.  </p>
+<p><img src="../../../../image/network/byte.png" alt="reason">  </p>
 
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="https://acodetailor.github.io/2022/06/11/byte&0xff/" title="byte[i] &amp; 0xff是干啥？" target="_blank" rel="external">https://acodetailor.github.io/2022/06/11/byte&0xff/</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://github.com/acodetailor" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/images/avatar.png" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://github.com/acodetailor" target="_blank"><span class="text-dark">Sam</span><small class="ml-1x"></small></a></h3>
+        <div>想上黄金、想成为优秀的程序员。</div>
+      </div>
+    </figure>
   </div>
+</div>
+
+
+    </div>
+  </article>
   
-  <p class="article-meta">
-    <span class="article-date">
-    <i class="icon icon-calendar-check"></i>
-	<a href="/2021/04/24/java_oom/" class="article-date">
-	  <time datetime="2021-04-24T12:11:36.499Z" itemprop="datePublished">4月 24</time>
-	</a>
-</span>
     
-  <span class="article-category">
-    <i class="icon icon-folder"></i>
-    <a class="article-category-link" href="/categories/%E8%BF%90%E7%BB%B4/">运维</a>
-  </span>
 
-    
-  <span class="article-tag">
-    <i class="icon icon-tags"></i>
-	<a class="article-tag-link-link" href="/tags/oom/" rel="tag">oom</a>
-  </span>
-
-
-    <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2021/04/24/java_oom/#comments" class="article-comment-link">评论</a></span>
-    
-  </p>
-</article>
-
-    
-      <article class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
-  <div class="article-header">
-    
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/04/19/install%20knative/">Minikube搭建istio和Knative</a>
-    </h1>
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
   
-
-  </div>
+  <ul class="pager pull-left">
+    
+    
+    <li class="next">
+      <a href="/2022/06/01/consul_prolem/" title="consul nodeId conflict导致所有agent都无法加入"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+  </ul>
   
-  <p class="article-meta">
-    <span class="article-date">
-    <i class="icon icon-calendar-check"></i>
-	<a href="/2021/04/19/install%20knative/" class="article-date">
-	  <time datetime="2021-04-19T09:26:51.731Z" itemprop="datePublished">4月 19</time>
-	</a>
-</span>
-    
-  <span class="article-category">
-    <i class="icon icon-folder"></i>
-    <a class="article-category-link" href="/categories/k8s/">k8s</a>
-  </span>
-
-    
-  <span class="article-tag">
-    <i class="icon icon-tags"></i>
-	<a class="article-tag-link-link" href="/tags/k8s/" rel="tag">k8s</a>
-  </span>
-
-
-    <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2021/04/19/install%20knative/#comments" class="article-comment-link">评论</a></span>
-    
-  </p>
-</article>
-
-    
-      <article class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
-  <div class="article-header">
-    
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/04/12/ops-oom/">记一次OOM的问题排查</a>
-    </h1>
+  <!-- Button trigger modal -->
+  <button type="button" class="btn btn-fancy btn-donate pop-onhover bg-gradient-warning" data-toggle="modal" data-target="#donateModal"><span>赏</span></button>
+  <!-- <div class="wave-icon wave-icon-danger btn-donate" data-toggle="modal" data-target="#donateModal">
+    <div class="wave-circle"><span class="icon"><i class="icon icon-bill"></i></span></div>
+  </div> -->
   
-
-  </div>
   
-  <p class="article-meta">
-    <span class="article-date">
-    <i class="icon icon-calendar-check"></i>
-	<a href="/2021/04/12/ops-oom/" class="article-date">
-	  <time datetime="2021-04-12T13:03:40.025Z" itemprop="datePublished">4月 12</time>
-	</a>
-</span>
+  <div class="bar-right">
     
-  <span class="article-category">
-    <i class="icon icon-folder"></i>
-    <a class="article-category-link" href="/categories/%E8%BF%90%E7%BB%B4/">运维</a>
-  </span>
-
-    
-  <span class="article-tag">
-    <i class="icon icon-tags"></i>
-	<a class="article-tag-link-link" href="/tags/oom/" rel="tag">oom</a>
-  </span>
-
-
-    <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2021/04/12/ops-oom/#comments" class="article-comment-link">评论</a></span>
-    
-  </p>
-</article>
-
-    
-      <article class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
-  <div class="article-header">
-    
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/04/09/problem/">记一次超级坑的问题排查</a>
-    </h1>
-  
-
-  </div>
-  
-  <p class="article-meta">
-    <span class="article-date">
-    <i class="icon icon-calendar-check"></i>
-	<a href="/2021/04/09/problem/" class="article-date">
-	  <time datetime="2021-04-09T06:37:26.865Z" itemprop="datePublished">4月 9</time>
-	</a>
-</span>
-    
-  <span class="article-category">
-    <i class="icon icon-folder"></i>
-    <a class="article-category-link" href="/categories/problem/">problem</a>
-  </span>
-
-    
-  <span class="article-tag">
-    <i class="icon icon-tags"></i>
-	<a class="article-tag-link-link" href="/tags/problem/" rel="tag">problem</a>
-  </span>
-
-
-    <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2021/04/09/problem/#comments" class="article-comment-link">评论</a></span>
-    
-  </p>
-</article>
-
-    
-      <article class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
-  <div class="article-header">
-    
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/04/09/golang/">k8s clientSet</a>
-    </h1>
-  
-
-  </div>
-  
-  <p class="article-meta">
-    <span class="article-date">
-    <i class="icon icon-calendar-check"></i>
-	<a href="/2021/04/09/golang/" class="article-date">
-	  <time datetime="2021-04-09T06:37:13.851Z" itemprop="datePublished">4月 9</time>
-	</a>
-</span>
-    
-  <span class="article-category">
-    <i class="icon icon-folder"></i>
-    <a class="article-category-link" href="/categories/k8s/">k8s</a>
-  </span>
-
-    
-  <span class="article-tag">
-    <i class="icon icon-tags"></i>
-	<a class="article-tag-link-link" href="/tags/k8s/" rel="tag">k8s</a>
-  </span>
-
-
-    <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2021/04/09/golang/#comments" class="article-comment-link">评论</a></span>
-    
-  </p>
-</article>
-
-    
-      <article class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
-  <div class="article-header">
-    
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/04/07/terraform_cloud/">terraform cloud CLI</a>
-    </h1>
-  
-
-  </div>
-  
-  <p class="article-meta">
-    <span class="article-date">
-    <i class="icon icon-calendar-check"></i>
-	<a href="/2021/04/07/terraform_cloud/" class="article-date">
-	  <time datetime="2021-04-07T02:02:39.990Z" itemprop="datePublished">4月 7</time>
-	</a>
-</span>
-    
-  <span class="article-category">
-    <i class="icon icon-folder"></i>
-    <a class="article-category-link" href="/categories/terraform/">terraform</a>
-  </span>
-
-    
-  <span class="article-tag">
-    <i class="icon icon-tags"></i>
-	<a class="article-tag-link-link" href="/tags/terraform/" rel="tag">terraform</a>
-  </span>
-
-
-    <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2021/04/07/terraform_cloud/#comments" class="article-comment-link">评论</a></span>
-    
-  </p>
-</article>
-
-    
-      <article class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
-  <div class="article-header">
-    
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/04/02/k8s_crd/">Kubernetes CRD -- kubebuilder搭建</a>
-    </h1>
-  
-
-  </div>
-  
-  <p class="article-meta">
-    <span class="article-date">
-    <i class="icon icon-calendar-check"></i>
-	<a href="/2021/04/02/k8s_crd/" class="article-date">
-	  <time datetime="2021-04-02T02:17:18.350Z" itemprop="datePublished">4月 2</time>
-	</a>
-</span>
-    
-  <span class="article-category">
-    <i class="icon icon-folder"></i>
-    <a class="article-category-link" href="/categories/k8s/">k8s</a>
-  </span>
-
-    
-  <span class="article-tag">
-    <i class="icon icon-tags"></i>
-	<a class="article-tag-link-link" href="/tags/k8s/" rel="tag">k8s</a>
-  </span>
-
-
-    <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2021/04/02/k8s_crd/#comments" class="article-comment-link">评论</a></span>
-    
-  </p>
-</article>
-
-    
-      <article class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
-  <div class="article-header">
-    
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/03/30/terraform/">Terraform介绍</a>
-    </h1>
-  
-
-  </div>
-  
-  <p class="article-meta">
-    <span class="article-date">
-    <i class="icon icon-calendar-check"></i>
-	<a href="/2021/03/30/terraform/" class="article-date">
-	  <time datetime="2021-03-30T02:38:39.714Z" itemprop="datePublished">3月 30</time>
-	</a>
-</span>
-    
-  <span class="article-category">
-    <i class="icon icon-folder"></i>
-    <a class="article-category-link" href="/categories/Cloud/">Cloud</a>
-  </span>
-
-    
-  <span class="article-tag">
-    <i class="icon icon-tags"></i>
-	<a class="article-tag-link-link" href="/tags/terraform/" rel="tag">terraform</a>
-  </span>
-
-
-    <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2021/03/30/terraform/#comments" class="article-comment-link">评论</a></span>
-    
-  </p>
-</article>
-
+    <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter" data-mobile-sites="weibo,qq,qzone"></div>
     
   </div>
-
+  </div>
+</nav>
   
-    
-    <nav class="bar bar-footer clearfix" data-stick-bottom>
-        <div class="bar-inner">
-        <ul class="pager pull-left">
-            
-            <li class="prev">
-                <a href="/">
-                    <i class="icon icon-angle-left"></i>
-                    上一页
-                </a>
-            </li>
-            
-            
-            <li class="next disabled">
-                <a href="javascript:;">
-                    下一页
-                    <i class="icon icon-angle-right"></i>                    
-                </a>
-            </li>
-            
-        </ul>
-        <div class="total-article bar-right">Page 2 of 2</div>
+<!-- Modal -->
+<div class="modal modal-center modal-small modal-xs-full fade" id="donateModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content donate">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <div class="modal-body">
+        <div class="donate-box">
+          <div class="donate-head">
+            <p>感谢您的支持，我会继续努力的!</p>
+          </div>
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade active in" id="alipay">
+              <div class="donate-payimg">
+                <img src="/images/donate/alipayimg.png" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开支付宝扫一扫，即可进行扫码打赏哦</p>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="wechatpay">
+              <div class="donate-payimg">
+                <img src="/images/donate/wechatpayimg.png" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开微信扫一扫，即可进行扫码打赏哦</p>
+            </div>
+          </div>
+          <div class="donate-footer">
+            <ul class="nav nav-tabs nav-justified" role="tablist">
+              <li role="presentation" class="active">
+                <a href="#alipay" id="alipay-tab" role="tab" data-toggle="tab" aria-controls="alipay" aria-expanded="true"><i class="icon icon-alipay"></i> 支付宝</a>
+              </li>
+              <li role="presentation" class="">
+                <a href="#wechatpay" role="tab" id="wechatpay-tab" data-toggle="tab" aria-controls="wechatpay" aria-expanded="false"><i class="icon icon-wepay"></i> 微信支付</a>
+              </li>
+            </ul>
+          </div>
         </div>
-    </nav>
-    
- 
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
 </main>
 
   <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">

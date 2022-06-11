@@ -6,7 +6,7 @@
   <link href="https://acodetailor.github.io/atom.xml" rel="self"/>
   
   <link href="https://acodetailor.github.io/"/>
-  <updated>2022-06-01T08:58:17.824Z</updated>
+  <updated>2022-06-11T14:59:51.941Z</updated>
   <id>https://acodetailor.github.io/</id>
   
   <author>
@@ -15,6 +15,30 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>byte[i] &amp; 0xff是干啥？</title>
+    <link href="https://acodetailor.github.io/2022/06/11/byte&amp;0xff/"/>
+    <id>https://acodetailor.github.io/2022/06/11/byte&amp;0xff/</id>
+    <published>2022-06-11T13:28:41.623Z</published>
+    <updated>2022-06-11T14:59:51.941Z</updated>
+    
+    <content type="html"><![CDATA[<h4 id="一、背景"><a href="#一、背景" class="headerlink" title="一、背景"></a>一、背景</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">src[i] &amp; 0xFF</span><br></pre></td></tr></table></figure><p>上述代码片段对于一个javaer来说应该不陌生。最近需求里需要通过文件流的前缀来判断上传文件的类型。看到了这段代码，没理解是这块代码的作用。  </p><h4 id="二、知识回顾"><a href="#二、知识回顾" class="headerlink" title="二、知识回顾"></a>二、知识回顾</h4><p>0、二进制中一个字节(byte)是存储信息的最小单位，大小为8bits，即8个位，每个0或1就是一个位(bit)，规定数据的最高位是符号位。符号位是1表示负数，是0表示正数。<br>正数存储二进制原码，负数存储的是二进制的补码，补码是负数的绝对值反码加1。<br>1、java中int是4个字节，32位。<br>2、对于有符号数，如-1，按补码存储。 -1 的绝对值，取反再加一。即1的二进制 0000 0001，取反 1111 1110，再加一。1111 1111。</p><h4 id="三、进行与操作"><a href="#三、进行与操作" class="headerlink" title="三、进行与操作"></a>三、进行与操作</h4><p>java中采用的是补码的形式，如上述提到的-1，java中存的是1111 1111，，如果直接转十六进制，则int补齐高位的24位，变为<br>1111 1111 1111 1111 1111 1111 1111 1111，转为16进制为ffffffff。与实际的ff就有了偏差。</p><p>0xff的二进制为 1111 1111，进行与操作，将高位清零，结果ok.  </p><p><img src="../../../../image/network/byte.png" alt="reason">  </p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h4 id=&quot;一、背景&quot;&gt;&lt;a href=&quot;#一、背景&quot; class=&quot;headerlink&quot; title=&quot;一、背景&quot;&gt;&lt;/a&gt;一、背景&lt;/h4&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pr</summary>
+      
+    
+    
+    
+    <category term="java" scheme="https://acodetailor.github.io/categories/java/"/>
+    
+    
+    <category term="java" scheme="https://acodetailor.github.io/tags/java/"/>
+    
+  </entry>
   
   <entry>
     <title>consul nodeId conflict导致所有agent都无法加入</title>
